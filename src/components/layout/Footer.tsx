@@ -25,7 +25,7 @@ const footerLinks = {
 
 export function Footer() {
   return (
-    <footer className="bg-brand-950 text-white/70 font-body">
+    <footer className="bg-brand-950 text-white/80 font-body">
       {/* CTA band */}
       <div className="bg-gradient-to-r from-brand-700 to-brand-800">
         <div className="max-w-7xl mx-auto px-6 py-12 flex flex-col md:flex-row items-center justify-between gap-6">
@@ -33,7 +33,7 @@ export function Footer() {
             <h3 className="font-display text-2xl md:text-3xl font-bold text-white">
               Ready to Take the Next Step?
             </h3>
-            <p className="text-brand-100/80 mt-1">
+            <p className="text-brand-100 mt-1">
               Schedule your appointment today and start your journey to
               pain-free feet.
             </p>
@@ -177,26 +177,28 @@ export function Footer() {
       {/* Bottom bar */}
       <div className="border-t border-white/10">
         <div className="max-w-7xl mx-auto px-6 py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-xs text-white/40">
+          <p className="text-xs text-white/70">
             &copy; {new Date().getFullYear()} Podiatry Group of Georgia. All
             rights reserved.
           </p>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2">
             <a
               href="https://facebook.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-white/40 hover:text-gold-400 transition-colors"
+              aria-label="Facebook"
+              className="p-2 text-white/70 hover:text-gold-400 transition-colors"
             >
-              <Facebook size={18} />
+              <Facebook size={20} />
             </a>
             <a
               href="https://instagram.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-white/40 hover:text-gold-400 transition-colors"
+              aria-label="Instagram"
+              className="p-2 text-white/70 hover:text-gold-400 transition-colors"
             >
-              <Instagram size={18} />
+              <Instagram size={20} />
             </a>
           </div>
         </div>

@@ -21,7 +21,7 @@ export default async function SpaPage() {
           <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-white max-w-3xl">
             Foot & Hand Spa
           </h1>
-          <p className="mt-4 text-lg text-white/50 font-body max-w-xl">
+          <p className="mt-4 text-lg text-white/80 font-body max-w-xl">
             The only medical spa in North Georgia solely dedicated to the
             treatment of hands and feet. Relax in a medically supervised,
             hospital-grade clean environment.
@@ -48,7 +48,7 @@ export default async function SpaPage() {
               dangerouslySetInnerHTML={{ __html: page.content }}
             />
           ) : (
-            <div className="space-y-6 text-brand-700/70 font-body text-lg leading-relaxed">
+            <div className="space-y-6 text-brand-700 font-body text-lg leading-relaxed">
               <p>
                 Our custom-formulated treatment products are exclusive to the
                 Foot and Hand Spa at Podiatry Group of Georgia. We use the
@@ -72,7 +72,7 @@ export default async function SpaPage() {
           <h2 className="font-display text-3xl font-bold text-brand-900">
             Treat Your Feet Today
           </h2>
-          <p className="mt-3 text-brand-700/60 font-body">
+          <p className="mt-3 text-brand-600 font-body">
             Combine our spa services with personalized medical care for the best
             results.
           </p>

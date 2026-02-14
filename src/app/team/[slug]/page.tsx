@@ -60,7 +60,7 @@ export default async function TeamMemberPage({ params }: Props) {
                 </p>
               )}
               {member.acf?.specialty && (
-                <p className="mt-2 text-white/50 text-lg font-body">
+                <p className="mt-2 text-white/80 text-lg font-body">
                   {member.acf.specialty}
                 </p>
               )}
@@ -112,7 +112,7 @@ export default async function TeamMemberPage({ params }: Props) {
                     <span className="text-gold-400 mt-0.5">🎓</span>
                     <div>
                       <p className="font-semibold text-brand-900">{edu.degree}</p>
-                      <p className="text-sm text-brand-700/60">
+                      <p className="text-sm text-brand-600">
                         {edu.school}
                         {edu.year && ` · ${edu.year}`}
                       </p>

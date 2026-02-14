@@ -51,7 +51,7 @@ export function AppointmentForm({ defaultType }: AppointmentFormProps) {
               >
                 Medical
               </p>
-              <p className="text-xs text-brand-700/50 mt-0.5">
+              <p className="text-xs text-brand-600 mt-0.5">
                 Podiatry care
               </p>
             </div>
@@ -87,7 +87,7 @@ export function AppointmentForm({ defaultType }: AppointmentFormProps) {
               >
                 Medical Spa
               </p>
-              <p className="text-xs text-brand-700/50 mt-0.5">
+              <p className="text-xs text-brand-600 mt-0.5">
                 Foot & hand spa
               </p>
             </div>
@@ -169,7 +169,7 @@ export function AppointmentForm({ defaultType }: AppointmentFormProps) {
         Submit Request
       </Button>
 
-      <p className="text-xs text-brand-700/40 text-center font-body">
+      <p className="text-xs text-brand-600 text-center font-body">
         We typically respond within 1 business day. For urgent
         concerns, please call us directly.
       </p>

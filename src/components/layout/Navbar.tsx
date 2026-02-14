@@ -168,7 +168,8 @@ export function Navbar() {
               {/* Cart */}
               <Link
                 href="/shop/cart"
-                className="relative p-2.5 text-brand-700 hover:text-brand-500 hover:bg-brand-50 rounded-lg transition-colors"
+                aria-label="Shopping cart"
+                className="relative p-3 text-brand-700 hover:text-brand-500 hover:bg-brand-50 rounded-lg transition-colors"
               >
                 <ShoppingBag size={20} />
                 {itemCount > 0 && (
@@ -205,7 +206,7 @@ export function Navbar() {
                         <Stethoscope size={18} className="text-brand-500 shrink-0" />
                         <div>
                           <p className="font-semibold">Medical Appointment</p>
-                          <p className="text-xs text-brand-700/50 mt-0.5">
+                          <p className="text-xs text-brand-600 mt-0.5">
                             Podiatry consultation & treatment
                           </p>
                         </div>
@@ -219,7 +220,7 @@ export function Navbar() {
                         <Sparkles size={18} className="text-gold-400 shrink-0" />
                         <div>
                           <p className="font-semibold">Medical Spa Appointment</p>
-                          <p className="text-xs text-brand-700/50 mt-0.5">
+                          <p className="text-xs text-brand-600 mt-0.5">
                             Foot & hand spa treatments
                           </p>
                         </div>
@@ -232,7 +233,8 @@ export function Navbar() {
               {/* Mobile toggle */}
               <button
                 onClick={() => setMobileOpen(!mobileOpen)}
-                className="lg:hidden p-2.5 text-brand-700 hover:bg-brand-50 rounded-lg"
+                aria-label={mobileOpen ? "Close menu" : "Open menu"}
+                className="lg:hidden p-3 text-brand-700 hover:bg-brand-50 rounded-lg"
               >
                 {mobileOpen ? <X size={22} /> : <Menu size={22} />}
               </button>

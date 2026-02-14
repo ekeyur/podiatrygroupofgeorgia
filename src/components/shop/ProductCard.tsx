@@ -55,7 +55,8 @@ export function ProductCard({ product }: { product: SimpleProduct }) {
         <button
           onClick={handleAddToCart}
           disabled={adding}
-          className="absolute bottom-3 right-3 w-10 h-10 bg-brand-500 text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300 hover:bg-brand-600 shadow-lg disabled:opacity-50"
+          aria-label={`Add ${product.name} to cart`}
+          className="absolute bottom-3 right-3 w-12 h-12 bg-brand-500 text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300 hover:bg-brand-600 shadow-lg disabled:opacity-50"
         >
           {adding ? (
             <Loader2 size={16} className="animate-spin" />

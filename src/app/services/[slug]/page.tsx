@@ -49,7 +49,7 @@ export default async function ServiceDetailPage({ params }: Props) {
             {service.title}
           </h1>
           {service.acf?.shortDescription && (
-            <p className="mt-4 text-lg text-white/60 font-body max-w-xl">
+            <p className="mt-4 text-lg text-white/80 font-body max-w-xl">
               {service.acf.shortDescription}
             </p>
           )}
@@ -87,7 +87,7 @@ export default async function ServiceDetailPage({ params }: Props) {
                   <h3 className="font-display text-lg font-bold text-brand-900">
                     {item.question}
                   </h3>
-                  <p className="mt-2 text-brand-700/70 font-body leading-relaxed">
+                  <p className="mt-2 text-brand-700 font-body leading-relaxed">
                     {item.answer}
                   </p>
                 </div>

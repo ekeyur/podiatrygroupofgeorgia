@@ -49,7 +49,7 @@ export default async function BlogPostPage({ params }: Props) {
                 {post.categories.nodes[0].name}
               </span>
             )}
-            <span className="text-white/40">{formatDate(post.date)}</span>
+            <span className="text-white/70">{formatDate(post.date)}</span>
           </div>
 
           <h1 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight">
@@ -67,7 +67,7 @@ export default async function BlogPostPage({ params }: Props) {
                   className="rounded-full"
                 />
               )}
-              <span className="text-white/60 text-sm font-body">
+              <span className="text-white/80 text-sm font-body">
                 By {post.author.node.name}
               </span>
             </div>

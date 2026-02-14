@@ -22,7 +22,7 @@ export default function CheckoutPage() {
             <h2 className="font-display text-2xl font-bold text-brand-900 mb-2">
               Checkout Coming Soon
             </h2>
-            <p className="text-brand-700/60 font-body mb-6">
+            <p className="text-brand-600 font-body mb-6">
               This checkout page will be integrated with Stripe for secure
               payment processing. For now, please call our office to place an
               order.

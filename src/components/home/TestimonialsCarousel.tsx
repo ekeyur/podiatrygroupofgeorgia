@@ -80,7 +80,8 @@ export function TestimonialsCarousel({
             <div className="mt-8 flex items-center justify-center gap-4">
               <button
                 onClick={prev}
-                className="w-10 h-10 rounded-full border border-brand-200 flex items-center justify-center text-brand-500 hover:bg-brand-50 transition-colors"
+                aria-label="Previous testimonial"
+                className="w-12 h-12 rounded-full border border-brand-200 flex items-center justify-center text-brand-500 hover:bg-brand-50 transition-colors"
               >
                 <ChevronLeft size={18} />
               </button>
@@ -90,10 +91,11 @@ export function TestimonialsCarousel({
                   <button
                     key={i}
                     onClick={() => setCurrent(i)}
-                    className={`w-2 h-2 rounded-full transition-all ${
+                    aria-label={`Go to testimonial ${i + 1}`}
+                    className={`h-3 rounded-full transition-all ${
                       i === current
                         ? "bg-brand-500 w-6"
-                        : "bg-brand-200 hover:bg-brand-300"
+                        : "bg-brand-200 hover:bg-brand-300 w-3"
                     }`}
                   />
                 ))}
@@ -101,7 +103,8 @@ export function TestimonialsCarousel({
 
               <button
                 onClick={next}
-                className="w-10 h-10 rounded-full border border-brand-200 flex items-center justify-center text-brand-500 hover:bg-brand-50 transition-colors"
+                aria-label="Next testimonial"
+                className="w-12 h-12 rounded-full border border-brand-200 flex items-center justify-center text-brand-500 hover:bg-brand-50 transition-colors"
               >
                 <ChevronRight size={18} />
               </button>

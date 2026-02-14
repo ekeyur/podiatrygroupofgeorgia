@@ -33,7 +33,7 @@ export default function CartPage() {
               <h2 className="font-display text-2xl font-bold text-brand-900">
                 Your cart is empty
               </h2>
-              <p className="mt-2 text-brand-700/50 font-body">
+              <p className="mt-2 text-brand-600 font-body">
                 Browse our products and add something you love.
               </p>
               <div className="mt-6">
@@ -91,7 +91,8 @@ export default function CartPage() {
                               )
                             }
                             disabled={loading}
-                            className="w-8 h-8 flex items-center justify-center text-brand-500 hover:bg-brand-50 rounded-l-full transition-colors"
+                            aria-label="Decrease quantity"
+                            className="w-10 h-10 flex items-center justify-center text-brand-500 hover:bg-brand-50 rounded-l-full transition-colors"
                           >
                             <Minus size={14} />
                           </button>
@@ -103,7 +104,8 @@ export default function CartPage() {
                               updateQuantity(item.key, item.quantity + 1)
                             }
                             disabled={loading}
-                            className="w-8 h-8 flex items-center justify-center text-brand-500 hover:bg-brand-50 rounded-r-full transition-colors"
+                            aria-label="Increase quantity"
+                            className="w-10 h-10 flex items-center justify-center text-brand-500 hover:bg-brand-50 rounded-r-full transition-colors"
                           >
                             <Plus size={14} />
                           </button>
@@ -112,7 +114,8 @@ export default function CartPage() {
                         <button
                           onClick={() => removeItem(item.key)}
                           disabled={loading}
-                          className="p-2 text-brand-400 hover:text-rose-500 hover:bg-rose-50 rounded-lg transition-colors"
+                          aria-label="Remove item"
+                          className="p-3 text-brand-400 hover:text-rose-500 hover:bg-rose-50 rounded-lg transition-colors"
                         >
                           <Trash2 size={16} />
                         </button>
@@ -130,18 +133,18 @@ export default function CartPage() {
                   </h2>
 
                   <div className="space-y-3 text-sm font-body">
-                    <div className="flex justify-between text-brand-700/70">
+                    <div className="flex justify-between text-brand-700">
                       <span>Subtotal</span>
                       <span>{formatPrice(cart?.subtotal || "0")}</span>
                     </div>
                     {cart?.shippingTotal && cart.shippingTotal !== "$0.00" && (
-                      <div className="flex justify-between text-brand-700/70">
+                      <div className="flex justify-between text-brand-700">
                         <span>Shipping</span>
                         <span>{formatPrice(cart.shippingTotal)}</span>
                       </div>
                     )}
                     {cart?.totalTax && cart.totalTax !== "$0.00" && (
-                      <div className="flex justify-between text-brand-700/70">
+                      <div className="flex justify-between text-brand-700">
                         <span>Tax</span>
                         <span>{formatPrice(cart.totalTax)}</span>
                       </div>

@@ -24,7 +24,7 @@ export default async function ServicesPage() {
           <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-white max-w-3xl">
             Foot & Ankle Services
           </h1>
-          <p className="mt-4 text-lg text-white/50 font-body max-w-xl">
+          <p className="mt-4 text-lg text-white/80 font-body max-w-xl">
             From advanced treatments to preventive care, we offer comprehensive
             podiatric services under one roof.
           </p>
@@ -62,7 +62,7 @@ export default async function ServicesPage() {
                       className="opacity-0 group-hover:opacity-100 transition-opacity text-brand-500"
                     />
                   </h2>
-                  <p className="mt-2 text-brand-700/60 font-body text-sm leading-relaxed line-clamp-3">
+                  <p className="mt-2 text-brand-600 font-body text-sm leading-relaxed line-clamp-3">
                     {service.acf?.shortDescription || ""}
                   </p>
                 </div>

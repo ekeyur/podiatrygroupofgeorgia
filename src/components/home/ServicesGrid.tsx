@@ -61,7 +61,7 @@ export function ServicesGrid({ services }: { services: Service[] }) {
                 <h3 className="font-display text-xl font-bold text-brand-900 group-hover:text-brand-600 transition-colors">
                   {service.title}
                 </h3>
-                <p className="mt-2 text-brand-700/60 font-body text-sm leading-relaxed line-clamp-3">
+                <p className="mt-2 text-brand-600 font-body text-sm leading-relaxed line-clamp-3">
                   {service.acf?.shortDescription || ""}
                 </p>
 

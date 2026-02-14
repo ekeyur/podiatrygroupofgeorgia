@@ -28,7 +28,7 @@ export default async function ContactPage({
           <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-white max-w-3xl">
             Get in Touch
           </h1>
-          <p className="mt-4 text-lg text-white/50 font-body max-w-xl">
+          <p className="mt-4 text-lg text-white/80 font-body max-w-xl">
             Ready to start your journey to pain-free feet? Book an appointment
             or reach out with any questions.
           </p>
@@ -51,7 +51,7 @@ export default async function ContactPage({
                   </div>
                   <div>
                     <p className="font-semibold text-brand-900">Address</p>
-                    <p className="text-sm text-brand-700/60 mt-0.5">
+                    <p className="text-sm text-brand-600 mt-0.5">
                       2864 Johnson Ferry Rd, Suite 100
                       <br />
                       Marietta, GA 30062
@@ -71,7 +71,7 @@ export default async function ContactPage({
                     >
                       (404) 806-3731
                     </a>
-                    <p className="text-sm text-brand-700/60 mt-0.5">
+                    <p className="text-sm text-brand-600 mt-0.5">
                       Fax: (770) 321-0001
                     </p>
                   </div>
@@ -98,7 +98,7 @@ export default async function ContactPage({
                   </div>
                   <div>
                     <p className="font-semibold text-brand-900">Office Hours</p>
-                    <div className="text-sm text-brand-700/60 mt-0.5 space-y-0.5">
+                    <div className="text-sm text-brand-600 mt-0.5 space-y-0.5">
                       <p>Monday – Friday: 8:00 AM – 5:00 PM</p>
                       <p>Saturday – Sunday: Closed</p>
                     </div>

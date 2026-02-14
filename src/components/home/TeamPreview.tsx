@@ -57,7 +57,7 @@ export function TeamPreview({ team }: { team: TeamMember[] }) {
                   </p>
                 )}
                 {member.acf?.specialty && (
-                  <p className="mt-1 text-brand-700/50 text-sm font-body">
+                  <p className="mt-1 text-brand-600 text-sm font-body">
                     {member.acf.specialty}
                   </p>
                 )}

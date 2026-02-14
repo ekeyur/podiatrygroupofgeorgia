@@ -58,7 +58,7 @@ export function WhyChooseUs() {
               <p className="font-display text-3xl md:text-4xl font-bold text-white">
                 {stat.value}
               </p>
-              <p className="mt-1 text-brand-100/70 text-sm font-body">
+              <p className="mt-1 text-brand-200 text-sm font-body">
                 {stat.label}
               </p>
             </motion.div>

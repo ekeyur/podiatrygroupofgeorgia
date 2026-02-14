@@ -23,7 +23,7 @@ export default async function AboutPage() {
           <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-white max-w-3xl">
             {page?.title || "Why Choose Us"}
           </h1>
-          <p className="mt-4 text-lg text-white/50 font-body max-w-xl">
+          <p className="mt-4 text-lg text-white/80 font-body max-w-xl">
             The leading Georgia foot and ankle practice for a reason.
           </p>
         </div>
@@ -38,7 +38,7 @@ export default async function AboutPage() {
               dangerouslySetInnerHTML={{ __html: page.content }}
             />
           ) : (
-            <p className="text-brand-700/70 font-body text-lg leading-relaxed">
+            <p className="text-brand-700 font-body text-lg leading-relaxed">
               At the Podiatry Group of Georgia, we are dedicated to providing
               the highest quality foot and ankle care in a compassionate,
               patient-centered environment. Led by Dr. Tammy Gephart and Dr.

@@ -23,7 +23,7 @@ export default async function BlogPage() {
           <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-white max-w-3xl">
             Health Tips & Insights
           </h1>
-          <p className="mt-4 text-lg text-white/50 font-body max-w-xl">
+          <p className="mt-4 text-lg text-white/80 font-body max-w-xl">
             Stay informed about foot and ankle health with articles from our
             expert podiatrists.
           </p>
@@ -65,7 +65,7 @@ export default async function BlogPage() {
                     <h2 className="font-display text-lg font-bold text-brand-900 group-hover:text-brand-600 transition-colors line-clamp-2">
                       {post.title}
                     </h2>
-                    <p className="mt-2 text-brand-700/50 text-sm font-body line-clamp-3">
+                    <p className="mt-2 text-brand-600 text-sm font-body line-clamp-3">
                       {truncate(stripHtml(post.excerpt), 150)}
                     </p>
                   </div>
@@ -74,7 +74,7 @@ export default async function BlogPage() {
             </div>
           ) : (
             <div className="text-center py-20">
-              <p className="text-brand-700/50 text-lg font-body">
+              <p className="text-brand-600 text-lg font-body">
                 No blog posts yet. Check back soon!
               </p>
             </div>

@@ -89,6 +89,7 @@ export default function ProductDetailClient({ product }: ProductDetailProps) {
                     <button
                       key={i}
                       onClick={() => setSelectedImage(i)}
+                      aria-label={`View image ${i + 1}`}
                       className={`relative w-20 h-20 rounded-xl overflow-hidden border-2 transition-colors ${
                         i === selectedImage
                           ? "border-brand-500"
@@ -135,7 +136,7 @@ export default function ProductDetailClient({ product }: ProductDetailProps) {
                       />
                     ))}
                   </div>
-                  <span className="text-sm text-brand-700/50">
+                  <span className="text-sm text-brand-600">
                     ({product.reviews.nodes.length} reviews)
                   </span>
                 </div>
@@ -155,7 +156,7 @@ export default function ProductDetailClient({ product }: ProductDetailProps) {
 
               {/* Short description */}
               {product.shortDescription && (
-                <p className="mt-4 text-brand-700/70 font-body leading-relaxed">
+                <p className="mt-4 text-brand-700 font-body leading-relaxed">
                   {stripHtml(product.shortDescription)}
                 </p>
               )}
@@ -165,7 +166,8 @@ export default function ProductDetailClient({ product }: ProductDetailProps) {
                 <div className="flex items-center border border-brand-200 rounded-full">
                   <button
                     onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                    className="w-10 h-10 flex items-center justify-center text-brand-500 hover:bg-brand-50 rounded-l-full transition-colors"
+                    aria-label="Decrease quantity"
+                    className="w-12 h-12 flex items-center justify-center text-brand-500 hover:bg-brand-50 rounded-l-full transition-colors"
                   >
                     <Minus size={16} />
                   </button>
@@ -174,7 +176,8 @@ export default function ProductDetailClient({ product }: ProductDetailProps) {
                   </span>
                   <button
                     onClick={() => setQuantity(quantity + 1)}
-                    className="w-10 h-10 flex items-center justify-center text-brand-500 hover:bg-brand-50 rounded-r-full transition-colors"
+                    aria-label="Increase quantity"
+                    className="w-12 h-12 flex items-center justify-center text-brand-500 hover:bg-brand-50 rounded-r-full transition-colors"
                   >
                     <Plus size={16} />
                   </button>

@@ -22,7 +22,7 @@ export default async function TeamPage() {
           <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-white max-w-3xl">
             Meet Your Doctors
           </h1>
-          <p className="mt-4 text-lg text-white/50 font-body max-w-xl">
+          <p className="mt-4 text-lg text-white/80 font-body max-w-xl">
             Board-certified podiatrists committed to your foot and ankle health.
           </p>
         </div>
@@ -61,7 +61,7 @@ export default async function TeamPage() {
                     </p>
                   )}
                   {member.acf?.specialty && (
-                    <p className="mt-1 text-brand-700/50 text-sm font-body">
+                    <p className="mt-1 text-brand-600 text-sm font-body">
                       {member.acf.specialty}
                     </p>
                   )}

@@ -22,7 +22,7 @@ export default async function TestimonialsPage() {
           <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-white max-w-3xl">
             Patient Stories
           </h1>
-          <p className="mt-4 text-lg text-white/50 font-body max-w-xl">
+          <p className="mt-4 text-lg text-white/80 font-body max-w-xl">
             Hear from real patients about their experience at our practice.
           </p>
         </div>
@@ -52,7 +52,7 @@ export default async function TestimonialsPage() {
                     ))}
                   </div>
 
-                  <blockquote className="text-brand-700/70 font-body text-sm leading-relaxed italic">
+                  <blockquote className="text-brand-700 font-body text-sm leading-relaxed italic">
                     &ldquo;{stripHtml(t.content)}&rdquo;
                   </blockquote>
 
@@ -71,7 +71,7 @@ export default async function TestimonialsPage() {
             </div>
           ) : (
             <div className="text-center py-20">
-              <p className="text-brand-700/50 text-lg font-body">
+              <p className="text-brand-600 text-lg font-body">
                 Testimonials coming soon.
               </p>
             </div>

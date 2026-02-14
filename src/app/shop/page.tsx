@@ -22,7 +22,7 @@ export default async function ShopPage() {
           <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-white max-w-3xl">
             Our Products
           </h1>
-          <p className="mt-4 text-lg text-white/50 font-body max-w-xl">
+          <p className="mt-4 text-lg text-white/80 font-body max-w-xl">
             Custom-formulated treatment products exclusive to our Marietta
             clinic, made with the finest quality ingredients.
           </p>
@@ -59,7 +59,7 @@ export default async function ShopPage() {
             </div>
           ) : (
             <div className="text-center py-20">
-              <p className="text-brand-700/50 text-lg font-body">
+              <p className="text-brand-600 text-lg font-body">
                 No products available at the moment. Check back soon!
               </p>
             </div>
