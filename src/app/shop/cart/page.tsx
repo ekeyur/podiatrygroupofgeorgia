@@ -14,9 +14,9 @@ export default function CartPage() {
 
   return (
     <>
-      <section className="bg-brand-950 py-16">
-        <div className="max-w-7xl mx-auto px-6">
-          <h1 className="font-display text-4xl font-bold text-white">
+      <section className="bg-brand-950 py-10 sm:py-16">
+        <div className="max-w-7xl mx-auto px-5 sm:px-6">
+          <h1 className="font-display text-3xl sm:text-4xl font-bold text-white">
             Your Cart
           </h1>
         </div>
@@ -43,7 +43,7 @@ export default function CartPage() {
               </div>
             </div>
           ) : (
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
               {/* Cart items */}
               <div className="lg:col-span-2 space-y-4">
                 {items.map((item) => (
@@ -127,7 +127,7 @@ export default function CartPage() {
 
               {/* Order summary */}
               <div className="lg:col-span-1">
-                <div className="bg-white rounded-2xl p-6 border border-brand-100/50 sticky top-28">
+                <div className="bg-white rounded-2xl p-6 border border-brand-100/50 sticky top-20 lg:top-28">
                   <h2 className="font-display text-xl font-bold text-brand-900 mb-4">
                     Order Summary
                   </h2>

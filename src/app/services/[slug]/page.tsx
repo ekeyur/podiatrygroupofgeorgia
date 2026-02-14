@@ -31,7 +31,7 @@ export default async function ServiceDetailPage({ params }: Props) {
     <>
       {/* Hero */}
       <section
-        className="relative bg-brand-950 py-24"
+        className="relative bg-brand-950 py-14 sm:py-20 lg:py-24"
         style={{
           backgroundImage: service.acf?.heroImage?.sourceUrl
             ? `url(${service.acf.heroImage.sourceUrl})`
@@ -45,7 +45,7 @@ export default async function ServiceDetailPage({ params }: Props) {
           <span className="inline-block font-body text-sm font-semibold uppercase tracking-[0.2em] text-gold-400 mb-3">
             Our Services
           </span>
-          <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-white max-w-3xl">
+          <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white max-w-3xl">
             {service.title}
           </h1>
           {service.acf?.shortDescription && (

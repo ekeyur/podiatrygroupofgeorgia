@@ -28,7 +28,7 @@ const stats = [
 
 export function WhyChooseUs() {
   return (
-    <section className="py-20 bg-brand-500 relative overflow-hidden">
+    <section className="py-12 sm:py-20 bg-brand-500 relative overflow-hidden">
       {/* Subtle pattern */}
       <div className="absolute inset-0 opacity-5">
         <div
@@ -41,8 +41,8 @@ export function WhyChooseUs() {
         />
       </div>
 
-      <div className="relative max-w-7xl mx-auto px-6">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
+      <div className="relative max-w-7xl mx-auto px-5 sm:px-6">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-8 md:gap-12">
           {stats.map((stat, i) => (
             <motion.div
               key={stat.label}
@@ -52,10 +52,10 @@ export function WhyChooseUs() {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: i * 0.1 }}
             >
-              <div className="w-14 h-14 mx-auto bg-white/15 rounded-xl flex items-center justify-center mb-4 backdrop-blur-sm">
-                <stat.icon size={24} className="text-gold-400" />
+              <div className="w-11 h-11 sm:w-14 sm:h-14 mx-auto bg-white/15 rounded-xl flex items-center justify-center mb-3 sm:mb-4 backdrop-blur-sm">
+                <stat.icon size={22} className="text-gold-400" />
               </div>
-              <p className="font-display text-3xl md:text-4xl font-bold text-white">
+              <p className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-white">
                 {stat.value}
               </p>
               <p className="mt-1 text-brand-200 text-sm font-body">

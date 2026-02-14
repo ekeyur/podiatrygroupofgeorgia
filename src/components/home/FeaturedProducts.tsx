@@ -16,15 +16,15 @@ export function FeaturedProducts({
   if (!products.length) return null;
 
   return (
-    <section className="py-24 bg-white">
-      <div className="max-w-7xl mx-auto px-6">
+    <section className="py-14 sm:py-24 bg-white">
+      <div className="max-w-7xl mx-auto px-5 sm:px-6">
         <SectionHeading
           eyebrow="Shop"
           title="Featured Products"
           description="Custom-formulated treatment products exclusive to our Marietta clinic, made with the finest quality ingredients."
         />
 
-        <div className="mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="mt-10 sm:mt-16 grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
           {products.map((product, i) => (
             <motion.div
               key={product.slug}

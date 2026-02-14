@@ -28,9 +28,9 @@ export function Footer() {
     <footer className="bg-brand-950 text-white/80 font-body">
       {/* CTA band */}
       <div className="bg-gradient-to-r from-brand-700 to-brand-800">
-        <div className="max-w-7xl mx-auto px-6 py-12 flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="max-w-7xl mx-auto px-5 sm:px-6 py-8 sm:py-12 flex flex-col md:flex-row items-center justify-between gap-5 sm:gap-6">
           <div>
-            <h3 className="font-display text-2xl md:text-3xl font-bold text-white">
+            <h3 className="font-display text-xl sm:text-2xl md:text-3xl font-bold text-white text-center md:text-left">
               Ready to Take the Next Step?
             </h3>
             <p className="text-brand-100 mt-1">
@@ -38,16 +38,16 @@ export function Footer() {
               pain-free feet.
             </p>
           </div>
-          <div className="flex gap-4">
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full sm:w-auto">
             <Link
               href="/contact"
-              className="px-8 py-3 bg-white text-brand-800 font-semibold rounded-full hover:bg-cream-50 transition-colors shadow-lg"
+              className="px-8 py-3 bg-white text-brand-800 font-semibold rounded-full hover:bg-cream-50 transition-colors shadow-lg text-center"
             >
               Book Online
             </Link>
             <a
               href="tel:4048063731"
-              className="px-8 py-3 border-2 border-white/30 text-white font-semibold rounded-full hover:bg-white/10 transition-colors"
+              className="px-8 py-3 border-2 border-white/30 text-white font-semibold rounded-full hover:bg-white/10 transition-colors text-center"
             >
               Call Us
             </a>
@@ -56,10 +56,10 @@ export function Footer() {
       </div>
 
       {/* Main footer */}
-      <div className="max-w-7xl mx-auto px-6 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12">
+      <div className="max-w-7xl mx-auto px-5 sm:px-6 py-10 sm:py-16">
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-12">
           {/* Brand column */}
-          <div className="lg:col-span-2">
+          <div className="col-span-2 lg:col-span-2">
             <Link href="/" className="flex items-center gap-3">
               <div className="w-10 h-10 bg-brand-500 rounded-xl flex items-center justify-center">
                 <span className="text-white font-display font-bold text-lg">

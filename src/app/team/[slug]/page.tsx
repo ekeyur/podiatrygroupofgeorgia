@@ -30,11 +30,11 @@ export default async function TeamMemberPage({ params }: Props) {
 
   return (
     <>
-      <section className="bg-brand-950 py-24">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-center">
+      <section className="bg-brand-950 py-14 sm:py-24">
+        <div className="max-w-7xl mx-auto px-5 sm:px-6">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12 items-center">
             {/* Photo */}
-            <div className="relative w-64 h-64 lg:w-full lg:h-80 rounded-2xl overflow-hidden bg-brand-900 mx-auto lg:mx-0">
+            <div className="relative w-48 h-48 sm:w-56 sm:h-56 lg:w-full lg:h-80 rounded-2xl overflow-hidden bg-brand-900 mx-auto lg:mx-0">
               {member.acf?.headshot?.sourceUrl ? (
                 <Image
                   src={member.acf.headshot.sourceUrl}
@@ -51,7 +51,7 @@ export default async function TeamMemberPage({ params }: Props) {
 
             {/* Info */}
             <div className="lg:col-span-2">
-              <h1 className="font-display text-4xl md:text-5xl font-bold text-white">
+              <h1 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-white text-center lg:text-left">
                 {member.title}
               </h1>
               {member.acf?.credentials && (

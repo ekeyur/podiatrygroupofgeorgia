@@ -26,7 +26,7 @@ export function Hero({ headline, subtext, imageUrl }: HeroProps) {
   }, []);
 
   return (
-    <section className="relative min-h-[90vh] flex items-center overflow-hidden bg-brand-950">
+    <section className="relative min-h-[80vh] sm:min-h-[90vh] flex items-center overflow-hidden bg-brand-950">
       {/* Background image with overlay */}
       <div
         className="absolute inset-0 bg-cover bg-center"
@@ -40,12 +40,12 @@ export function Hero({ headline, subtext, imageUrl }: HeroProps) {
       </div>
 
       {/* Decorative elements */}
-      <div className="absolute top-20 right-20 w-96 h-96 bg-gold-400/10 rounded-full blur-3xl" />
-      <div className="absolute bottom-20 left-10 w-64 h-64 bg-brand-500/10 rounded-full blur-3xl" />
+      <div className="absolute top-20 right-20 w-64 h-64 sm:w-96 sm:h-96 bg-gold-400/10 rounded-full blur-3xl" />
+      <div className="absolute bottom-20 left-10 w-48 h-48 sm:w-64 sm:h-64 bg-brand-500/10 rounded-full blur-3xl" />
 
       {/* Content */}
-      <div className="relative max-w-7xl mx-auto px-6 py-32">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      <div className="relative max-w-7xl mx-auto px-5 sm:px-6 py-20 sm:py-32">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           {/* Left — Text content */}
           <div className="max-w-2xl">
             <motion.div
@@ -60,7 +60,7 @@ export function Hero({ headline, subtext, imageUrl }: HeroProps) {
             </motion.div>
 
             <motion.h1
-              className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-[1.1]"
+              className="font-display text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-[1.1]"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.15, ease: "easeOut" }}
@@ -74,7 +74,7 @@ export function Hero({ headline, subtext, imageUrl }: HeroProps) {
             </motion.h1>
 
             <motion.p
-              className="mt-6 text-lg md:text-xl text-white/80 font-body leading-relaxed max-w-lg"
+              className="mt-4 sm:mt-6 text-base sm:text-lg md:text-xl text-white/80 font-body leading-relaxed max-w-lg"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
@@ -83,8 +83,35 @@ export function Hero({ headline, subtext, imageUrl }: HeroProps) {
                 "Whether you need relief from pain, solutions to foot conditions, or a luxurious medical-grade pedicure — it's all here at the Podiatry Group of Georgia."}
             </motion.p>
 
+            {/* Mobile doctor photo — shown below text on small screens */}
             <motion.div
-              className="mt-10 flex flex-wrap gap-4"
+              className="mt-6 flex justify-center lg:hidden"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.35, ease: "easeOut" }}
+            >
+              <div
+                className="relative w-48 h-48 sm:w-56 sm:h-56"
+                style={{
+                  maskImage:
+                    "radial-gradient(ellipse 90% 90% at 50% 40%, black 50%, transparent 75%)",
+                  WebkitMaskImage:
+                    "radial-gradient(ellipse 90% 90% at 50% 40%, black 50%, transparent 75%)",
+                }}
+              >
+                <Image
+                  src="/doctor-hero.png"
+                  alt="Dr. Neha Pathak — Board Certified Podiatrist"
+                  fill
+                  className="object-contain object-top mix-blend-luminosity"
+                  priority
+                />
+                <div className="absolute inset-0 bg-brand-950/30 mix-blend-color" />
+              </div>
+            </motion.div>
+
+            <motion.div
+              className="mt-6 sm:mt-10 flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.45, ease: "easeOut" }}
@@ -92,7 +119,7 @@ export function Hero({ headline, subtext, imageUrl }: HeroProps) {
               <div className="relative" ref={bookingRef}>
                 <button
                   onClick={() => setBookingOpen(!bookingOpen)}
-                  className="inline-flex items-center justify-center gap-2 font-body font-semibold tracking-wide rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-brand-400 focus:ring-offset-2 bg-gold-400 text-brand-950 hover:bg-gold-300 shadow-lg shadow-gold-400/25 hover:shadow-gold-400/40 hover:-translate-y-0.5 px-10 py-4 text-lg"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 font-body font-semibold tracking-wide rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-brand-400 focus:ring-offset-2 bg-gold-400 text-brand-950 hover:bg-gold-300 shadow-lg shadow-gold-400/25 hover:shadow-gold-400/40 hover:-translate-y-0.5 px-8 sm:px-10 py-3.5 sm:py-4 text-base sm:text-lg"
                 >
                   Book Appointment
                   <ChevronDown
@@ -101,7 +128,7 @@ export function Hero({ headline, subtext, imageUrl }: HeroProps) {
                   />
                 </button>
                 {bookingOpen && (
-                  <div className="absolute top-full left-0 pt-2 w-72 z-50">
+                  <div className="absolute top-full left-0 right-0 sm:right-auto pt-2 sm:w-72 z-50">
                     <div className="bg-white rounded-xl shadow-xl shadow-brand-900/20 border border-brand-100 p-2">
                       <a
                         href="https://www.zocdoc.com/practice/podiatry-group-of-georgia-63623?lock=true&isNewPatient=false&referrerType=widget"
@@ -137,9 +164,9 @@ export function Hero({ headline, subtext, imageUrl }: HeroProps) {
               </div>
               <a
                 href="tel:4048063731"
-                className="inline-flex items-center gap-3 px-7 py-4 text-white hover:text-gold-300 font-semibold text-lg transition-colors"
+                className="inline-flex items-center justify-center sm:justify-start gap-3 px-7 py-3.5 sm:py-4 text-white hover:text-gold-300 font-semibold text-base sm:text-lg transition-colors"
               >
-                <span className="w-12 h-12 bg-white/15 rounded-full flex items-center justify-center border border-white/25">
+                <span className="w-10 h-10 sm:w-12 sm:h-12 bg-white/15 rounded-full flex items-center justify-center border border-white/25">
                   <Phone size={18} />
                 </span>
                 (404) 806-3731
@@ -148,33 +175,33 @@ export function Hero({ headline, subtext, imageUrl }: HeroProps) {
 
             {/* Trust badges */}
             <motion.div
-              className="mt-16 flex items-center gap-8 text-white/70 text-sm font-body"
+              className="mt-8 sm:mt-16 flex flex-wrap items-center gap-4 sm:gap-8 text-white/70 text-xs sm:text-sm font-body"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 1, delay: 0.8 }}
             >
               <div className="flex items-center gap-2">
-                <div className="w-8 h-8 bg-white/10 rounded-full flex items-center justify-center">
+                <div className="w-7 h-7 sm:w-8 sm:h-8 bg-white/10 rounded-full flex items-center justify-center">
                   <span className="text-gold-400 text-xs font-bold">✓</span>
                 </div>
                 Board Certified
               </div>
-              <div className="hidden sm:flex items-center gap-2">
-                <div className="w-8 h-8 bg-white/10 rounded-full flex items-center justify-center">
+              <div className="flex items-center gap-2">
+                <div className="w-7 h-7 sm:w-8 sm:h-8 bg-white/10 rounded-full flex items-center justify-center">
                   <span className="text-gold-400 text-xs font-bold">✓</span>
                 </div>
                 Wellstar Affiliated
               </div>
-              <div className="hidden md:flex items-center gap-2">
-                <div className="w-8 h-8 bg-white/10 rounded-full flex items-center justify-center">
+              <div className="flex items-center gap-2">
+                <div className="w-7 h-7 sm:w-8 sm:h-8 bg-white/10 rounded-full flex items-center justify-center">
                   <span className="text-gold-400 text-xs font-bold">✓</span>
                 </div>
-                Most Insurance Accepted
+                Insurance Accepted
               </div>
             </motion.div>
           </div>
 
-          {/* Right — Doctor photo */}
+          {/* Right — Doctor photo (desktop) */}
           <motion.div
             className="hidden lg:block relative"
             initial={{ opacity: 0, x: 40 }}
@@ -197,7 +224,6 @@ export function Hero({ headline, subtext, imageUrl }: HeroProps) {
                 className="object-contain object-top mix-blend-luminosity"
                 priority
               />
-              {/* Tint overlay to blend skin tones with the hero palette */}
               <div className="absolute inset-0 bg-brand-950/30 mix-blend-color" />
             </div>
           </motion.div>

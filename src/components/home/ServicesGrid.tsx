@@ -19,15 +19,15 @@ const fallbackIcons: Record<string, string> = {
 
 export function ServicesGrid({ services }: { services: Service[] }) {
   return (
-    <section className="py-24 bg-cream-50">
-      <div className="max-w-7xl mx-auto px-6">
+    <section className="py-14 sm:py-24 bg-cream-50">
+      <div className="max-w-7xl mx-auto px-5 sm:px-6">
         <SectionHeading
           eyebrow="What We Treat"
           title="Comprehensive Foot & Ankle Care"
           description="From advanced laser therapy to compassionate diabetic care, we offer a full spectrum of podiatric services under one roof."
         />
 
-        <div className="mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="mt-10 sm:mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           {services.map((service, i) => (
             <motion.div
               key={service.slug}

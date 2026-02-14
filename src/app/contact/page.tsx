@@ -20,12 +20,12 @@ export default async function ContactPage({
 
   return (
     <>
-      <section className="bg-brand-950 py-24">
-        <div className="max-w-7xl mx-auto px-6">
+      <section className="bg-brand-950 py-14 sm:py-24">
+        <div className="max-w-7xl mx-auto px-5 sm:px-6">
           <span className="inline-block font-body text-sm font-semibold uppercase tracking-[0.2em] text-gold-400 mb-3">
             Contact
           </span>
-          <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-white max-w-3xl">
+          <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white max-w-3xl">
             Get in Touch
           </h1>
           <p className="mt-4 text-lg text-white/80 font-body max-w-xl">
@@ -37,7 +37,7 @@ export default async function ContactPage({
 
       <section className="py-20 bg-cream-50">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16">
             {/* Contact info */}
             <div>
               <h2 className="font-display text-2xl font-bold text-brand-900 mb-6">

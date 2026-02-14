@@ -14,12 +14,12 @@ export default async function ShopPage() {
   return (
     <>
       {/* Hero */}
-      <section className="bg-brand-950 py-24">
-        <div className="max-w-7xl mx-auto px-6">
+      <section className="bg-brand-950 py-14 sm:py-24">
+        <div className="max-w-7xl mx-auto px-5 sm:px-6">
           <span className="inline-block font-body text-sm font-semibold uppercase tracking-[0.2em] text-gold-400 mb-3">
             Shop
           </span>
-          <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-white max-w-3xl">
+          <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white max-w-3xl">
             Our Products
           </h1>
           <p className="mt-4 text-lg text-white/80 font-body max-w-xl">
@@ -33,8 +33,8 @@ export default async function ShopPage() {
         <div className="max-w-7xl mx-auto px-6">
           {/* Category filters */}
           {categories.length > 0 && (
-            <div className="flex flex-wrap gap-2 mb-12">
-              <span className="px-5 py-2 bg-brand-500 text-white text-sm font-semibold rounded-full">
+            <div className="flex flex-wrap gap-2 mb-8 sm:mb-12">
+              <span className="px-4 sm:px-5 py-2 bg-brand-500 text-white text-sm font-semibold rounded-full">
                 All Products
               </span>
               {categories
@@ -42,7 +42,7 @@ export default async function ShopPage() {
                 .map((cat) => (
                   <span
                     key={cat.slug}
-                    className="px-5 py-2 bg-white text-brand-700 text-sm font-medium rounded-full border border-brand-100 hover:border-brand-300 cursor-pointer transition-colors"
+                    className="px-4 sm:px-5 py-2 bg-white text-brand-700 text-sm font-medium rounded-full border border-brand-100 hover:border-brand-300 cursor-pointer transition-colors"
                   >
                     {cat.name} ({cat.count})
                   </span>

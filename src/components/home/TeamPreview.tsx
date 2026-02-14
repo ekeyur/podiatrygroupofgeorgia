@@ -9,15 +9,15 @@ import type { TeamMember } from "@/types/wordpress";
 
 export function TeamPreview({ team }: { team: TeamMember[] }) {
   return (
-    <section className="py-24 bg-white">
-      <div className="max-w-7xl mx-auto px-6">
+    <section className="py-14 sm:py-24 bg-white">
+      <div className="max-w-7xl mx-auto px-5 sm:px-6">
         <SectionHeading
           eyebrow="Our Doctors"
           title="Meet Your Care Team"
           description="Our board-certified podiatrists bring decades of combined experience to every patient encounter."
         />
 
-        <div className="mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="mt-10 sm:mt-16 grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-8">
           {team.map((member, i) => (
             <motion.div
               key={member.slug}
@@ -31,7 +31,7 @@ export function TeamPreview({ team }: { team: TeamMember[] }) {
                 className="group block text-center"
               >
                 {/* Photo */}
-                <div className="relative w-48 h-48 mx-auto rounded-2xl overflow-hidden mb-5 bg-brand-100">
+                <div className="relative w-40 h-40 sm:w-48 sm:h-48 mx-auto rounded-2xl overflow-hidden mb-5 bg-brand-100">
                   {member.acf?.headshot?.sourceUrl ? (
                     <Image
                       src={member.acf.headshot.sourceUrl}

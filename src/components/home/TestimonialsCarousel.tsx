@@ -23,15 +23,15 @@ export function TestimonialsCarousel({
   const t = testimonials[current];
 
   return (
-    <section className="py-24 bg-cream-50">
-      <div className="max-w-7xl mx-auto px-6">
+    <section className="py-14 sm:py-24 bg-cream-50">
+      <div className="max-w-7xl mx-auto px-5 sm:px-6">
         <SectionHeading
           eyebrow="Testimonials"
           title="What Our Patients Say"
           description="Real stories from real patients who trusted us with their foot and ankle care."
         />
 
-        <div className="mt-16 max-w-3xl mx-auto">
+        <div className="mt-10 sm:mt-16 max-w-3xl mx-auto">
           <AnimatePresence mode="wait">
             <motion.div
               key={current}
@@ -39,7 +39,7 @@ export function TestimonialsCarousel({
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -20 }}
               transition={{ duration: 0.3 }}
-              className="bg-white rounded-2xl p-8 md:p-12 shadow-sm border border-brand-100/50 text-center"
+              className="bg-white rounded-2xl p-6 sm:p-8 md:p-12 shadow-sm border border-brand-100/50 text-center"
             >
               {/* Stars */}
               <div className="flex items-center justify-center gap-1 mb-6">

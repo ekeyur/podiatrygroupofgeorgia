@@ -14,12 +14,12 @@ export default async function TeamPage() {
 
   return (
     <>
-      <section className="bg-brand-950 py-24">
-        <div className="max-w-7xl mx-auto px-6">
+      <section className="bg-brand-950 py-14 sm:py-24">
+        <div className="max-w-7xl mx-auto px-5 sm:px-6">
           <span className="inline-block font-body text-sm font-semibold uppercase tracking-[0.2em] text-gold-400 mb-3">
             Our Team
           </span>
-          <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-white max-w-3xl">
+          <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white max-w-3xl">
             Meet Your Doctors
           </h1>
           <p className="mt-4 text-lg text-white/80 font-body max-w-xl">
@@ -30,7 +30,7 @@ export default async function TeamPage() {
 
       <section className="py-20 bg-cream-50">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-10">
             {team.map((member) => (
               <Link
                 key={member.slug}
