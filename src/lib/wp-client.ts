@@ -21,7 +21,9 @@ export async function fetchWP<T = any>(
   params?: Record<string, string | number | boolean>,
   options?: FetchWPOptions
 ): Promise<FetchWPResult<T>> {
-  const url = new URL(endpoint, WP_API_URL);
+  // Ensure base URL ends with / so relative endpoints resolve correctly
+  const base = WP_API_URL.endsWith("/") ? WP_API_URL : WP_API_URL + "/";
+  const url = new URL(endpoint.replace(/^\//, ""), base);
 
   if (params) {
     for (const [key, value] of Object.entries(params)) {

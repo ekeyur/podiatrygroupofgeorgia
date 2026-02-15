@@ -58,6 +58,79 @@
     @apply border-l-4 border-gold-400 pl-6 py-2 my-6 italic text-brand-700;
   }
 
+  /* ---- Elementor content taming ---- */
+
+  /* Constrain all inline SVGs from Elementor to icon size */
+  .wp-content svg {
+    width: 1em;
+    height: 1em;
+    display: inline-block;
+    vertical-align: -0.125em;
+    fill: currentColor;
+    flex-shrink: 0;
+  }
+
+  /* Icon lists — render as clean bullet lists */
+  .wp-content .elementor-icon-list-items {
+    @apply list-none mb-4 space-y-2 text-brand-700;
+    padding-left: 0;
+  }
+
+  .wp-content .elementor-icon-list-item {
+    @apply flex items-start gap-2;
+  }
+
+  .wp-content .elementor-icon-list-icon {
+    @apply text-brand-500 mt-1;
+    line-height: 1;
+  }
+
+  .wp-content .elementor-icon-list-text {
+    @apply flex-1;
+  }
+
+  /* Hide Elementor widgets that don't belong on the frontend */
+  .wp-content .elementor-widget-social-icons,
+  .wp-content .elementor-share-btn,
+  .wp-content .elementor-widget-author-box {
+    display: none;
+  }
+
+  /* Strip heavy Elementor layout wrappers — let them flow naturally */
+  .wp-content [data-elementor-type] {
+    display: contents;
+  }
+
+  .wp-content .elementor-element {
+    max-width: 100%;
+  }
+
+  .wp-content .elementor-widget-container {
+    max-width: 100%;
+  }
+
+  /* Elementor heading widgets */
+  .wp-content .elementor-heading-title {
+    @apply font-display font-bold text-brand-900;
+  }
+
+  .wp-content h1.elementor-heading-title {
+    @apply text-2xl md:text-3xl mt-0 mb-4;
+  }
+
+  .wp-content h4.elementor-heading-title {
+    @apply text-lg md:text-xl mt-8 mb-3;
+  }
+
+  /* WordPress tag cloud — override inline font-size to uniform pills */
+  .wp-content .tagcloud a,
+  .wp-content .wp-tag-cloud a,
+  .wp-content .elementor-tag-cloud a {
+    font-size: 0.8125rem !important;
+    @apply inline-block px-3 py-1.5 bg-brand-50 text-brand-600 rounded-full font-body font-medium no-underline
+           hover:bg-brand-500 hover:text-white transition-colors mr-1.5 mb-2;
+  }
+
   /* Floating CTA on mobile */
   .floating-cta {
     @apply fixed bottom-4 left-4 right-4 z-40 md:hidden;

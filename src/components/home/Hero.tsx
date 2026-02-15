@@ -26,7 +26,7 @@ export function Hero({ headline, subtext, imageUrl }: HeroProps) {
   }, []);
 
   return (
-    <section className="relative min-h-[80vh] sm:min-h-[90vh] flex items-center overflow-hidden bg-brand-950">
+    <section className="relative min-h-[52vh] sm:min-h-[57vh] flex items-center overflow-hidden bg-brand-950">
       {/* Background image with overlay */}
       <div
         className="absolute inset-0 bg-cover bg-center"

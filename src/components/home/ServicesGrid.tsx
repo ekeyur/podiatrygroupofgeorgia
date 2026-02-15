@@ -13,6 +13,7 @@ const fallbackIcons: Record<string, string> = {
   "diabetic-foot-care": "🩺",
   "foot-surgery": "🏥",
   orthotics: "🦶",
+  "bunion-treatment": "🦴",
   "medical-spa": "✨",
   default: "🦶",
 };
