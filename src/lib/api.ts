@@ -1,7 +1,7 @@
 import { fetchWP } from "./wp-client";
 import {
-  MOCK_SERVICES,
-  MOCK_TEAM_MEMBERS,
+  FALLBACK_SERVICES,
+  FALLBACK_TEAM_MEMBERS,
   MOCK_TESTIMONIALS,
   MOCK_HOMEPAGE,
 } from "./mock-data";
@@ -19,8 +19,6 @@ import type {
   WPImage,
   WPRawPost,
   WPRawPage,
-  WPRawService,
-  WPRawTeamMember,
   WPRawTestimonial,
   WPRawYoast,
   WPRawMenuItem,
@@ -31,6 +29,16 @@ import type {
 // ============================================
 // Transformers — map REST API shapes to app types
 // ============================================
+
+/**
+ * Rewrite absolute WordPress upload URLs to relative paths so images
+ * are proxied through Next.js rewrites, avoiding Cloudflare hotlink 403s.
+ */
+function proxyWpImages(html: string): string {
+  const siteUrl =
+    process.env.NEXT_PUBLIC_SITE_URL || "https://www.podiatrygroupofgeorgia.com";
+  return html.replaceAll(`${siteUrl}/wp-content/uploads/`, "/wp-content/uploads/");
+}
 
 function transformSEO(yoast?: WPRawYoast): SEO {
   return {
@@ -93,7 +101,7 @@ function transformPage(raw: WPRawPage): Page {
 
   return {
     title: raw.title.rendered,
-    content: raw.content.rendered,
+    content: proxyWpImages(raw.content.rendered),
     slug: raw.slug,
     featuredImage: transformFeaturedImage(raw._embedded),
     acf,
@@ -108,7 +116,7 @@ function transformPost(raw: WPRawPost): Post {
   return {
     title: raw.title.rendered,
     slug: raw.slug,
-    content: raw.content.rendered,
+    content: proxyWpImages(raw.content.rendered),
     excerpt: raw.excerpt.rendered,
     date: raw.date,
     modified: raw.modified,
@@ -128,47 +136,10 @@ function transformPost(raw: WPRawPost): Post {
   };
 }
 
-function transformService(raw: WPRawService): Service {
-  const acf = raw.acf ?? {};
-  return {
-    title: raw.title.rendered,
-    slug: raw.slug,
-    content: raw.content.rendered,
-    acf: {
-      shortDescription: acf.short_description ?? acf.shortDescription ?? "",
-      icon: transformACFImage(acf.icon),
-      heroImage: transformACFImage(acf.hero_image ?? acf.heroImage),
-      relatedProducts: acf.related_products ?? acf.relatedProducts,
-      faq: acf.faq,
-      ctaText: acf.cta_text ?? acf.ctaText,
-    },
-    seo: transformSEO(raw.yoast_head_json),
-  };
-}
-
-function transformTeamMember(raw: WPRawTeamMember): TeamMember {
-  const acf = raw.acf ?? {};
-  return {
-    title: raw.title.rendered,
-    slug: raw.slug,
-    content: raw.content.rendered,
-    acf: {
-      credentials: acf.credentials ?? "",
-      specialty: acf.specialty ?? "",
-      bio: acf.bio ?? "",
-      headshot: transformACFImage(acf.headshot),
-      education: acf.education,
-      certifications: acf.certifications,
-      acceptingPatients: acf.accepting_patients ?? acf.acceptingPatients ?? false,
-    },
-    seo: transformSEO(raw.yoast_head_json),
-  };
-}
-
 function transformTestimonial(raw: WPRawTestimonial): Testimonial {
   const acf = raw.acf ?? {};
   return {
-    content: raw.content.rendered,
+    content: proxyWpImages(raw.content.rendered),
     acf: {
       patientName: acf.patient_name ?? acf.patientName ?? "",
       rating: Number(acf.rating) || 5,
@@ -261,15 +232,108 @@ function transformMenuItem(
 }
 
 // ============================================
+// Service Page Mapping (frontend slug → WP page slug)
+// ============================================
+
+const SERVICE_PAGE_MAP: Record<
+  string,
+  { wpSlug: string; title: string; shortDescription: string }
+> = {
+  "laser-therapy": {
+    wpSlug: "laser-therapy-for-pain-relief-and-healing",
+    title: "Laser Therapy",
+    shortDescription:
+      "Advanced laser treatments for pain relief, faster healing, and fungal nail elimination.",
+  },
+  "foot-surgery": {
+    wpSlug: "surgery",
+    title: "Foot Surgery",
+    shortDescription:
+      "Minimally invasive foot and ankle surgery for bunions, hammertoes, heel spurs, and more.",
+  },
+  "diabetic-foot-care": {
+    wpSlug: "foot-pain",
+    title: "Diabetic Foot Care",
+    shortDescription:
+      "Comprehensive diabetic foot care to prevent complications and protect your mobility.",
+  },
+  orthotics: {
+    wpSlug: "treatment-diagnostics",
+    title: "Custom Orthotics",
+    shortDescription:
+      "Precision-crafted custom orthotics to correct alignment and relieve foot pain.",
+  },
+};
+
+function transformPageToService(
+  raw: WPRawPage,
+  frontendSlug: string,
+  meta: (typeof SERVICE_PAGE_MAP)[string]
+): Service {
+  return {
+    title: meta.title,
+    slug: frontendSlug,
+    content: proxyWpImages(raw.content.rendered),
+    acf: {
+      shortDescription: meta.shortDescription,
+      icon: { sourceUrl: "", altText: "" },
+      heroImage: { sourceUrl: "", altText: "" },
+    },
+    seo: transformSEO(raw.yoast_head_json),
+  };
+}
+
+// ============================================
+// Team Page Mapping (frontend slug → WP page slug)
+// ============================================
+
+const TEAM_PAGE_MAP: Record<
+  string,
+  { wpSlug: string; name: string; credentials: string; specialty: string; headshotUrl: string }
+> = {
+  "dr-delvadia": {
+    wpSlug: "dr-delvadia",
+    name: "Dr. Neha Delvadia",
+    credentials: "DPM",
+    specialty: "Podiatric Medicine & Surgery",
+    headshotUrl:
+      "https://www.podiatrygroupofgeorgia.com/wp-content/uploads/2024/04/1.jpg",
+  },
+};
+
+function transformPageToTeamMember(
+  raw: WPRawPage,
+  frontendSlug: string,
+  meta: (typeof TEAM_PAGE_MAP)[string]
+): TeamMember {
+  return {
+    title: meta.name,
+    slug: frontendSlug,
+    content: proxyWpImages(raw.content.rendered),
+    acf: {
+      credentials: meta.credentials,
+      specialty: meta.specialty,
+      bio: proxyWpImages(raw.content.rendered),
+      headshot: {
+        sourceUrl: meta.headshotUrl,
+        altText: meta.name,
+      },
+      acceptingPatients: true,
+    },
+    seo: transformSEO(raw.yoast_head_json),
+  };
+}
+
+// ============================================
 // Homepage
 // ============================================
 export async function getHomepageData() {
   const safeFetch = async <T>(
-    fn: () => Promise<{ data: T }>
+    fn: () => Promise<T>
   ): Promise<{ data: T; ok: true } | { ok: false }> => {
     try {
       const result = await fn();
-      return { data: result.data, ok: true };
+      return { data: result, ok: true };
     } catch {
       return { ok: false };
     }
@@ -277,29 +341,30 @@ export async function getHomepageData() {
 
   const [pageResult, servicesResult, teamResult, testimonialsResult, productsResult] =
     await Promise.all([
-      safeFetch(() => fetchWP<WPRawPage[]>("/wp/v2/pages", { slug: "home", _embed: "true" }, { tags: ["homepage"] })),
-      safeFetch(() => fetchWP<WPRawService[]>("/wp/v2/services", { per_page: 6, orderby: "menu_order", order: "asc" }, { tags: ["homepage", "services"] })),
-      safeFetch(() => fetchWP<WPRawTeamMember[]>("/wp/v2/team", { per_page: 4 }, { tags: ["homepage", "team"] })),
-      safeFetch(() => fetchWP<WPRawTestimonial[]>("/wp/v2/testimonials", { per_page: 5 }, { tags: ["homepage", "testimonials"] })),
-      safeFetch(() => fetchWP<WCStoreProduct[]>("/wc/store/v1/products", { per_page: 4, featured: true }, { tags: ["homepage", "products"] })),
+      safeFetch(async () => {
+        const { data } = await fetchWP<WPRawPage[]>("/wp/v2/pages", { slug: "home", _embed: "true" }, { tags: ["homepage"] });
+        return data[0] ? transformPage(data[0]) : null;
+      }),
+      safeFetch(() => getAllServices()),
+      safeFetch(() => getAllTeamMembers()),
+      safeFetch(async () => {
+        const { data } = await fetchWP<WPRawTestimonial[]>("/wp/v2/testimonials", { per_page: 5 }, { tags: ["homepage", "testimonials"] });
+        return data.map(transformTestimonial);
+      }),
+      safeFetch(async () => {
+        const { data } = await fetchWP<WCStoreProduct[]>("/wc/store/v1/products", { per_page: 4, featured: true }, { tags: ["homepage", "products"] });
+        return data.map(transformStoreProduct);
+      }),
     ]);
 
   return {
-    page: pageResult.ok && pageResult.data[0]
-      ? transformPage(pageResult.data[0])
-      : MOCK_HOMEPAGE,
-    services: servicesResult.ok
-      ? servicesResult.data.map(transformService)
-      : MOCK_SERVICES,
-    team: teamResult.ok
-      ? teamResult.data.map(transformTeamMember)
-      : MOCK_TEAM_MEMBERS,
+    page: (pageResult.ok && pageResult.data) ? pageResult.data : MOCK_HOMEPAGE,
+    services: servicesResult.ok ? servicesResult.data : FALLBACK_SERVICES,
+    team: teamResult.ok ? teamResult.data : FALLBACK_TEAM_MEMBERS,
     testimonials: testimonialsResult.ok
-      ? testimonialsResult.data.map(transformTestimonial)
+      ? testimonialsResult.data
       : MOCK_TESTIMONIALS,
-    products: productsResult.ok
-      ? productsResult.data.map(transformStoreProduct)
-      : [],
+    products: productsResult.ok ? productsResult.data : [],
   };
 }
 
@@ -320,85 +385,99 @@ export async function getPage(slug: string) {
 }
 
 // ============================================
-// Services
+// Services (fetched from WP pages, not CPT)
 // ============================================
-export async function getAllServices() {
+export async function getAllServices(): Promise<Service[]> {
+  const entries = Object.entries(SERVICE_PAGE_MAP);
+  const wpSlugs = entries.map(([, meta]) => meta.wpSlug).join(",");
+
   try {
-    const { data } = await fetchWP<WPRawService[]>(
-      "/wp/v2/services",
-      { per_page: 50, orderby: "menu_order", order: "asc", _embed: "true" },
+    const { data } = await fetchWP<WPRawPage[]>(
+      "/wp/v2/pages",
+      { slug: wpSlugs, per_page: entries.length, _embed: "true" },
       { tags: ["services"] }
     );
-    return data.map(transformService);
+
+    // Build a lookup from WP slug to raw page
+    const pageByWpSlug = new Map(data.map((p) => [p.slug, p]));
+
+    return entries.map(([frontendSlug, meta]) => {
+      const page = pageByWpSlug.get(meta.wpSlug);
+      if (page) return transformPageToService(page, frontendSlug, meta);
+      // Fallback for this specific service if page wasn't returned
+      return FALLBACK_SERVICES.find((s) => s.slug === frontendSlug)!;
+    });
   } catch {
-    return MOCK_SERVICES;
+    return FALLBACK_SERVICES;
   }
 }
 
-export async function getService(slug: string) {
+export async function getService(slug: string): Promise<Service | null> {
+  const meta = SERVICE_PAGE_MAP[slug];
+  if (!meta) return FALLBACK_SERVICES.find((s) => s.slug === slug) ?? null;
+
   try {
-    const { data } = await fetchWP<WPRawService[]>(
-      "/wp/v2/services",
-      { slug, _embed: "true" },
+    const { data } = await fetchWP<WPRawPage[]>(
+      "/wp/v2/pages",
+      { slug: meta.wpSlug, _embed: "true" },
       { tags: ["services"] }
     );
-    return data[0] ? transformService(data[0]) : null;
+    if (data[0]) return transformPageToService(data[0], slug, meta);
+    return FALLBACK_SERVICES.find((s) => s.slug === slug) ?? null;
   } catch {
-    return MOCK_SERVICES.find((s) => s.slug === slug) ?? null;
+    return FALLBACK_SERVICES.find((s) => s.slug === slug) ?? null;
   }
 }
 
-export async function getServiceSlugs() {
-  try {
-    const { data } = await fetchWP<{ slug: string }[]>(
-      "/wp/v2/services",
-      { per_page: 100, _fields: "slug" }
-    );
-    return data.map((n) => n.slug);
-  } catch {
-    return MOCK_SERVICES.map((s) => s.slug);
-  }
+export async function getServiceSlugs(): Promise<string[]> {
+  return Object.keys(SERVICE_PAGE_MAP);
 }
 
 // ============================================
-// Team
+// Team (fetched from WP pages, not CPT)
 // ============================================
-export async function getAllTeamMembers() {
+export async function getAllTeamMembers(): Promise<TeamMember[]> {
+  const entries = Object.entries(TEAM_PAGE_MAP);
+  const wpSlugs = entries.map(([, meta]) => meta.wpSlug).join(",");
+
   try {
-    const { data } = await fetchWP<WPRawTeamMember[]>(
-      "/wp/v2/team",
-      { per_page: 20, _embed: "true" },
+    const { data } = await fetchWP<WPRawPage[]>(
+      "/wp/v2/pages",
+      { slug: wpSlugs, per_page: entries.length, _embed: "true" },
       { tags: ["team"] }
     );
-    return data.map(transformTeamMember);
+
+    const pageByWpSlug = new Map(data.map((p) => [p.slug, p]));
+
+    return entries.map(([frontendSlug, meta]) => {
+      const page = pageByWpSlug.get(meta.wpSlug);
+      if (page) return transformPageToTeamMember(page, frontendSlug, meta);
+      return FALLBACK_TEAM_MEMBERS.find((m) => m.slug === frontendSlug)!;
+    });
   } catch {
-    return MOCK_TEAM_MEMBERS;
+    return FALLBACK_TEAM_MEMBERS;
   }
 }
 
-export async function getTeamMember(slug: string) {
+export async function getTeamMember(slug: string): Promise<TeamMember | null> {
+  const meta = TEAM_PAGE_MAP[slug];
+  if (!meta) return FALLBACK_TEAM_MEMBERS.find((m) => m.slug === slug) ?? null;
+
   try {
-    const { data } = await fetchWP<WPRawTeamMember[]>(
-      "/wp/v2/team",
-      { slug, _embed: "true" },
+    const { data } = await fetchWP<WPRawPage[]>(
+      "/wp/v2/pages",
+      { slug: meta.wpSlug, _embed: "true" },
       { tags: ["team"] }
     );
-    return data[0] ? transformTeamMember(data[0]) : null;
+    if (data[0]) return transformPageToTeamMember(data[0], slug, meta);
+    return FALLBACK_TEAM_MEMBERS.find((m) => m.slug === slug) ?? null;
   } catch {
-    return MOCK_TEAM_MEMBERS.find((m) => m.slug === slug) ?? null;
+    return FALLBACK_TEAM_MEMBERS.find((m) => m.slug === slug) ?? null;
   }
 }
 
-export async function getTeamSlugs() {
-  try {
-    const { data } = await fetchWP<{ slug: string }[]>(
-      "/wp/v2/team",
-      { per_page: 100, _fields: "slug" }
-    );
-    return data.map((n) => n.slug);
-  } catch {
-    return MOCK_TEAM_MEMBERS.map((m) => m.slug);
-  }
+export async function getTeamSlugs(): Promise<string[]> {
+  return Object.keys(TEAM_PAGE_MAP);
 }
 
 // ============================================
@@ -434,7 +513,7 @@ export async function getAllTestimonials(perPage = 20, page = 1) {
 // ============================================
 // Blog
 // ============================================
-export async function getBlogPosts(perPage = 10, page = 1) {
+export async function getBlogPosts(perPage = 12, page = 1) {
   try {
     const result = await fetchWP<WPRawPost[]>(
       "/wp/v2/posts",
