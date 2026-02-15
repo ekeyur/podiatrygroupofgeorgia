@@ -13,15 +13,15 @@ export default async function BlogPage() {
 
   return (
     <>
-      <section className="bg-brand-950 py-14 sm:py-24">
+      <section className="bg-cream-50 py-14 sm:py-24">
         <div className="max-w-7xl mx-auto px-5 sm:px-6">
-          <span className="inline-block font-body text-sm font-semibold uppercase tracking-[0.2em] text-gold-400 mb-3">
+          <span className="inline-block font-body text-sm font-semibold uppercase tracking-[0.2em] text-brand-500 mb-3">
             Blog
           </span>
-          <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white max-w-3xl">
+          <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-brand-950 max-w-3xl">
             Health Tips & Insights
           </h1>
-          <p className="mt-4 text-lg text-white/80 font-body max-w-xl">
+          <p className="mt-4 text-lg text-brand-700 font-body max-w-xl">
             Stay informed about foot and ankle health with articles from our
             expert podiatrists.
           </p>

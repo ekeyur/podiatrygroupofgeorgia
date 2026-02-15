@@ -1,4 +1,5 @@
 import { fetchWP } from "./wp-client";
+import { getGoogleReviews } from "./google-reviews";
 import {
   FALLBACK_SERVICES,
   FALLBACK_TEAM_MEMBERS,
@@ -19,7 +20,6 @@ import type {
   WPImage,
   WPRawPost,
   WPRawPage,
-  WPRawTestimonial,
   WPRawYoast,
   WPRawMenuItem,
   WCStoreProduct,
@@ -35,9 +35,17 @@ import type {
  * are proxied through Next.js rewrites, avoiding Cloudflare hotlink 403s.
  */
 function proxyWpImages(html: string): string {
-  const siteUrl =
-    process.env.NEXT_PUBLIC_SITE_URL || "https://www.podiatrygroupofgeorgia.com";
-  return html.replaceAll(`${siteUrl}/wp-content/uploads/`, "/wp-content/uploads/");
+  return html.replace(
+    /https?:\/\/(?:www\.)?podiatrygroupofgeorgia\.com\/wp-content\/uploads\//g,
+    "/wp-content/uploads/"
+  );
+}
+
+function proxyImageUrl(url: string): string {
+  return url.replace(
+    /^https?:\/\/(?:www\.)?podiatrygroupofgeorgia\.com\/wp-content\/uploads\//,
+    "/wp-content/uploads/"
+  );
 }
 
 function transformSEO(yoast?: WPRawYoast): SEO {
@@ -60,7 +68,7 @@ function transformFeaturedImage(
   if (!media) return undefined;
   return {
     node: {
-      sourceUrl: media.source_url,
+      sourceUrl: proxyImageUrl(media.source_url),
       altText: media.alt_text ?? "",
     },
   };
@@ -71,9 +79,9 @@ function transformACFImage(
 ): WPImage {
   if (!img) return { sourceUrl: "", altText: "" };
   // ACF REST API returns image as an object with url/alt or as a URL string
-  if (typeof img === "string") return { sourceUrl: img, altText: "" };
+  if (typeof img === "string") return { sourceUrl: proxyImageUrl(img), altText: "" };
   return {
-    sourceUrl: img.url ?? img.source_url ?? "",
+    sourceUrl: proxyImageUrl(img.url ?? img.source_url ?? ""),
     altText: img.alt ?? img.alt_text ?? "",
   };
 }
@@ -133,19 +141,6 @@ function transformPost(raw: WPRawPost): Post {
       },
     },
     seo: transformSEO(raw.yoast_head_json),
-  };
-}
-
-function transformTestimonial(raw: WPRawTestimonial): Testimonial {
-  const acf = raw.acf ?? {};
-  return {
-    content: proxyWpImages(raw.content.rendered),
-    acf: {
-      patientName: acf.patient_name ?? acf.patientName ?? "",
-      rating: Number(acf.rating) || 5,
-      source: acf.source ?? "",
-      dateReceived: acf.date_received ?? acf.dateReceived,
-    },
   };
 }
 
@@ -239,11 +234,17 @@ const SERVICE_PAGE_MAP: Record<
   string,
   { wpSlug: string; title: string; shortDescription: string }
 > = {
-  "laser-therapy": {
+  "laser-pain-relief": {
     wpSlug: "laser-therapy-for-pain-relief-and-healing",
-    title: "Laser Therapy",
+    title: "Laser Pain Relief & Healing",
     shortDescription:
-      "Advanced laser treatments for pain relief, faster healing, and fungal nail elimination.",
+      "Class 4 laser therapy to reduce inflammation, accelerate tissue repair, and relieve chronic foot and ankle pain.",
+  },
+  "clearly-beautiful-nails": {
+    wpSlug: "beautiful-nails",
+    title: "Clearly Beautiful Nails",
+    shortDescription:
+      "Painless Q-Clear laser treatment to eliminate toenail fungus — results in as little as one session.",
   },
   "foot-surgery": {
     wpSlug: "surgery",
@@ -347,10 +348,7 @@ export async function getHomepageData() {
       }),
       safeFetch(() => getAllServices()),
       safeFetch(() => getAllTeamMembers()),
-      safeFetch(async () => {
-        const { data } = await fetchWP<WPRawTestimonial[]>("/wp/v2/testimonials", { per_page: 5 }, { tags: ["homepage", "testimonials"] });
-        return data.map(transformTestimonial);
-      }),
+      safeFetch(() => getGoogleReviews()),
       safeFetch(async () => {
         const { data } = await fetchWP<WCStoreProduct[]>("/wc/store/v1/products", { per_page: 4, featured: true }, { tags: ["homepage", "products"] });
         return data.map(transformStoreProduct);
@@ -382,6 +380,48 @@ export async function getPage(slug: string) {
   } catch {
     return null;
   }
+}
+
+/**
+ * Fetch all published page slugs from WordPress for generateStaticParams.
+ * Excludes slugs that already have dedicated Next.js routes.
+ */
+export async function getPageSlugs(): Promise<string[]> {
+  const RESERVED_ROUTES = new Set([
+    "about",
+    "blog",
+    "contact",
+    "services",
+    "shop",
+    "spa",
+    "team",
+    "testimonials",
+  ]);
+
+  const slugs: string[] = [];
+  let page = 1;
+  let totalPages = 1;
+
+  try {
+    while (page <= totalPages) {
+      const result = await fetchWP<WPRawPage[]>(
+        "/wp/v2/pages",
+        { per_page: 100, page, _fields: "slug,status", status: "publish" },
+        { tags: ["pages"] }
+      );
+      for (const p of result.data) {
+        if (!RESERVED_ROUTES.has(p.slug)) {
+          slugs.push(p.slug);
+        }
+      }
+      totalPages = result.totalPages ?? 1;
+      page++;
+    }
+  } catch {
+    // Return whatever we've collected so far
+  }
+
+  return slugs;
 }
 
 // ============================================
@@ -481,33 +521,18 @@ export async function getTeamSlugs(): Promise<string[]> {
 }
 
 // ============================================
-// Testimonials
+// Testimonials (Google Business Profile reviews)
 // ============================================
-export async function getAllTestimonials(perPage = 20, page = 1) {
-  try {
-    const result = await fetchWP<WPRawTestimonial[]>(
-      "/wp/v2/testimonials",
-      { per_page: perPage, page },
-      { tags: ["testimonials"] }
-    );
-    return {
-      testimonials: result.data.map(transformTestimonial),
-      pageInfo: {
-        hasNextPage: (result.totalPages ?? 1) > page,
-        totalPages: result.totalPages ?? 1,
-        currentPage: page,
-      },
-    };
-  } catch {
-    return {
-      testimonials: MOCK_TESTIMONIALS,
-      pageInfo: {
-        hasNextPage: false,
-        totalPages: 1,
-        currentPage: 1,
-      },
-    };
-  }
+export async function getAllTestimonials() {
+  const reviews = await getGoogleReviews();
+  return {
+    testimonials: reviews.length > 0 ? reviews : MOCK_TESTIMONIALS,
+    pageInfo: {
+      hasNextPage: false,
+      totalPages: 1,
+      currentPage: 1,
+    },
+  };
 }
 
 // ============================================

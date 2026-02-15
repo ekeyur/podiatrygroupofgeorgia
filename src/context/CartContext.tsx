@@ -8,7 +8,6 @@ import {
   useEffect,
   type ReactNode,
 } from "react";
-import { clientFetchWP } from "@/lib/wp-client";
 import type { Cart, WCStoreCart, WCStoreCartItem } from "@/types/wordpress";
 
 interface CartContextType {
@@ -80,37 +79,40 @@ function transformStoreCart(raw: WCStoreCart): Cart {
   };
 }
 
+/**
+ * Helper to call the cart proxy API route.
+ */
+async function cartFetch<T = WCStoreCart>(
+  method: "GET" | "POST",
+  body?: Record<string, unknown>
+): Promise<T> {
+  const res = await fetch("/api/cart", {
+    method,
+    headers: body ? { "Content-Type": "application/json" } : undefined,
+    body: body ? JSON.stringify(body) : undefined,
+  });
+
+  const data = await res.json();
+
+  if (!res.ok) {
+    throw new Error(data?.message || "Cart operation failed");
+  }
+
+  return data as T;
+}
+
 export function CartProvider({ children }: { children: ReactNode }) {
   const [cart, setCart] = useState<Cart | null>(null);
   const [loading, setLoading] = useState(false);
-  const [cartToken, setCartToken] = useState<string | null>(null);
-
-  // Load cart token from storage
-  useEffect(() => {
-    const token = localStorage.getItem("wc_cart_token");
-    if (token) setCartToken(token);
-  }, []);
-
-  // Save cart token
-  const saveToken = useCallback((token: string | null) => {
-    if (token) {
-      localStorage.setItem("wc_cart_token", token);
-      setCartToken(token);
-    }
-  }, []);
 
   const refreshCart = useCallback(async () => {
     try {
-      const { data, cartToken: newToken } = await clientFetchWP<WCStoreCart>(
-        "/wc/store/v1/cart",
-        { cartToken: cartToken ?? undefined }
-      );
+      const data = await cartFetch("GET");
       setCart(transformStoreCart(data));
-      saveToken(newToken);
     } catch (error) {
       console.error("Failed to refresh cart:", error);
     }
-  }, [cartToken, saveToken]);
+  }, []);
 
   // Load cart on mount
   useEffect(() => {
@@ -121,94 +123,66 @@ export function CartProvider({ children }: { children: ReactNode }) {
     async (productId: number, quantity = 1) => {
       setLoading(true);
       try {
-        const { data, cartToken: newToken } = await clientFetchWP<WCStoreCart>(
-          "/wc/store/v1/cart/add-item",
-          {
-            method: "POST",
-            body: { id: productId, quantity },
-            cartToken: cartToken ?? undefined,
-          }
-        );
+        const data = await cartFetch("POST", {
+          action: "add-item",
+          id: productId,
+          quantity,
+        });
         setCart(transformStoreCart(data));
-        saveToken(newToken);
-      } catch (error) {
-        console.error("Failed to add to cart:", error);
-        throw error;
       } finally {
         setLoading(false);
       }
     },
-    [cartToken, saveToken]
+    []
   );
 
   const updateQuantity = useCallback(
     async (key: string, quantity: number) => {
       setLoading(true);
       try {
-        const { data, cartToken: newToken } = await clientFetchWP<WCStoreCart>(
-          "/wc/store/v1/cart/update-item",
-          {
-            method: "POST",
-            body: { key, quantity },
-            cartToken: cartToken ?? undefined,
-          }
-        );
+        const data = await cartFetch("POST", {
+          action: "update-item",
+          key,
+          quantity,
+        });
         setCart(transformStoreCart(data));
-        saveToken(newToken);
-      } catch (error) {
-        console.error("Failed to update cart:", error);
       } finally {
         setLoading(false);
       }
     },
-    [cartToken, saveToken]
+    []
   );
 
   const removeItem = useCallback(
     async (key: string) => {
       setLoading(true);
       try {
-        const { data, cartToken: newToken } = await clientFetchWP<WCStoreCart>(
-          "/wc/store/v1/cart/remove-item",
-          {
-            method: "POST",
-            body: { key },
-            cartToken: cartToken ?? undefined,
-          }
-        );
+        const data = await cartFetch("POST", {
+          action: "remove-item",
+          key,
+        });
         setCart(transformStoreCart(data));
-        saveToken(newToken);
-      } catch (error) {
-        console.error("Failed to remove from cart:", error);
       } finally {
         setLoading(false);
       }
     },
-    [cartToken, saveToken]
+    []
   );
 
   const applyCoupon = useCallback(
     async (code: string) => {
       setLoading(true);
       try {
-        const { data, cartToken: newToken } = await clientFetchWP<WCStoreCart>(
-          "/wc/store/v1/cart/apply-coupon",
-          {
-            method: "POST",
-            body: { code },
-            cartToken: cartToken ?? undefined,
-          }
-        );
+        const data = await cartFetch("POST", {
+          action: "apply-coupon",
+          code,
+        });
         setCart(transformStoreCart(data));
-        saveToken(newToken);
-      } catch (error) {
-        console.error("Failed to apply coupon:", error);
-        throw error;
       } finally {
         setLoading(false);
       }
     },
-    [cartToken, saveToken]
+    []
   );
 
   const itemCount = cart?.contents?.itemCount ?? 0;

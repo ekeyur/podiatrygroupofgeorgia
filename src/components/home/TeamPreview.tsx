@@ -52,7 +52,7 @@ export function TeamPreview({ team }: { team: TeamMember[] }) {
                   {member.title}
                 </h3>
                 {member.acf?.credentials && (
-                  <p className="text-gold-500 text-sm font-semibold font-body">
+                  <p className="text-brand-500 text-sm font-semibold font-body">
                     {member.acf.credentials}
                   </p>
                 )}

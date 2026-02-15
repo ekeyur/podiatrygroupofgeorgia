@@ -4,12 +4,14 @@ import Link from "next/link";
 import Image from "next/image";
 import { formatPrice } from "@/lib/utils";
 import { useCart } from "@/context/CartContext";
+import { useToast } from "@/context/ToastContext";
 import { ShoppingBag, Loader2 } from "lucide-react";
 import { useState } from "react";
 import type { SimpleProduct } from "@/types/wordpress";
 
 export function ProductCard({ product }: { product: SimpleProduct }) {
   const { addToCart } = useCart();
+  const { addToast } = useToast();
   const [adding, setAdding] = useState(false);
 
   const handleAddToCart = async (e: React.MouseEvent) => {
@@ -18,8 +20,9 @@ export function ProductCard({ product }: { product: SimpleProduct }) {
     setAdding(true);
     try {
       await addToCart(product.databaseId);
+      addToast({ type: "success", message: `${product.name} added to cart` });
     } catch {
-      // Handle error
+      addToast({ type: "error", message: "Failed to add item to cart" });
     } finally {
       setAdding(false);
     }

@@ -55,7 +55,7 @@
   }
 
   .wp-content blockquote {
-    @apply border-l-4 border-gold-400 pl-6 py-2 my-6 italic text-brand-700;
+    @apply border-l-4 border-brand-500 pl-6 py-2 my-6 italic text-brand-700;
   }
 
   /* ---- Elementor content taming ---- */

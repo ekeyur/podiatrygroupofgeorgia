@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { ChevronLeft, ChevronRight, Star } from "lucide-react";
 import { stripHtml } from "@/lib/utils";
@@ -62,15 +63,28 @@ export function TestimonialsCarousel({
               </blockquote>
 
               {/* Attribution */}
-              <div className="mt-6">
-                <p className="font-display text-base font-bold text-brand-900">
-                  {t.acf?.patientName || "Patient"}
-                </p>
-                {t.acf?.source && (
-                  <p className="text-sm text-brand-500 font-body mt-0.5">
-                    via {t.acf.source}
-                  </p>
+              <div className="mt-6 flex items-center justify-center gap-3">
+                {t.acf?.photoUrl && (
+                  <Image
+                    src={t.acf.photoUrl}
+                    alt={t.acf.patientName || "Reviewer"}
+                    width={40}
+                    height={40}
+                    className="rounded-full"
+                  />
                 )}
+                <div className={t.acf?.photoUrl ? "text-left" : "text-center"}>
+                  <p className="font-display text-base font-bold text-brand-900">
+                    {t.acf?.patientName || "Patient"}
+                  </p>
+                  <p className="text-sm text-brand-500 font-body mt-0.5">
+                    {t.acf?.relativeTime
+                      ? `${t.acf.relativeTime} on Google`
+                      : t.acf?.source
+                        ? `via ${t.acf.source}`
+                        : ""}
+                  </p>
+                </div>
               </div>
             </motion.div>
           </AnimatePresence>

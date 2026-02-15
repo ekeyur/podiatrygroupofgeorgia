@@ -1,6 +1,7 @@
 "use client";
 
 import { useCart } from "@/context/CartContext";
+import { useToast } from "@/context/ToastContext";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
@@ -9,14 +10,15 @@ import { Minus, Plus, Trash2, ShoppingBag, Loader2 } from "lucide-react";
 
 export default function CartPage() {
   const { cart, loading, updateQuantity, removeItem } = useCart();
+  const { addToast } = useToast();
 
   const items = cart?.contents?.nodes || [];
 
   return (
     <>
-      <section className="bg-brand-950 py-10 sm:py-16">
+      <section className="bg-cream-50 py-10 sm:py-16">
         <div className="max-w-7xl mx-auto px-5 sm:px-6">
-          <h1 className="font-display text-3xl sm:text-4xl font-bold text-white">
+          <h1 className="font-display text-3xl sm:text-4xl font-bold text-brand-950">
             Your Cart
           </h1>
         </div>
@@ -84,12 +86,13 @@ export default function CartPage() {
                       <div className="mt-3 flex items-center gap-3">
                         <div className="flex items-center border border-brand-200 rounded-full">
                           <button
-                            onClick={() =>
-                              updateQuantity(
-                                item.key,
-                                Math.max(1, item.quantity - 1)
-                              )
-                            }
+                            onClick={async () => {
+                              try {
+                                await updateQuantity(item.key, Math.max(1, item.quantity - 1));
+                              } catch {
+                                addToast({ type: "error", message: "Failed to update quantity" });
+                              }
+                            }}
                             disabled={loading}
                             aria-label="Decrease quantity"
                             className="w-10 h-10 flex items-center justify-center text-brand-500 hover:bg-brand-50 rounded-l-full transition-colors"
@@ -100,9 +103,13 @@ export default function CartPage() {
                             {item.quantity}
                           </span>
                           <button
-                            onClick={() =>
-                              updateQuantity(item.key, item.quantity + 1)
-                            }
+                            onClick={async () => {
+                              try {
+                                await updateQuantity(item.key, item.quantity + 1);
+                              } catch {
+                                addToast({ type: "error", message: "Failed to update quantity" });
+                              }
+                            }}
                             disabled={loading}
                             aria-label="Increase quantity"
                             className="w-10 h-10 flex items-center justify-center text-brand-500 hover:bg-brand-50 rounded-r-full transition-colors"
@@ -112,7 +119,14 @@ export default function CartPage() {
                         </div>
 
                         <button
-                          onClick={() => removeItem(item.key)}
+                          onClick={async () => {
+                            try {
+                              await removeItem(item.key);
+                              addToast({ type: "success", message: "Item removed from cart" });
+                            } catch {
+                              addToast({ type: "error", message: "Failed to remove item" });
+                            }
+                          }}
                           disabled={loading}
                           aria-label="Remove item"
                           className="p-3 text-brand-400 hover:text-rose-500 hover:bg-rose-50 rounded-lg transition-colors"

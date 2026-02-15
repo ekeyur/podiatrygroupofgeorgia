@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useCart } from "@/context/CartContext";
+import { useToast } from "@/context/ToastContext";
 import { formatPrice, stripHtml } from "@/lib/utils";
 import { Button } from "@/components/ui/Button";
 import {
@@ -25,6 +26,7 @@ interface ProductDetailProps {
 
 export default function ProductDetailClient({ product }: ProductDetailProps) {
   const { addToCart, loading } = useCart();
+  const { addToast } = useToast();
   const [quantity, setQuantity] = useState(1);
   const [selectedImage, setSelectedImage] = useState(0);
   const [adding, setAdding] = useState(false);
@@ -38,6 +40,10 @@ export default function ProductDetailClient({ product }: ProductDetailProps) {
     setAdding(true);
     try {
       await addToCart(product.databaseId, quantity);
+      addToast({ type: "success", message: `${product.name} added to cart` });
+      setQuantity(1);
+    } catch {
+      addToast({ type: "error", message: "Failed to add item to cart" });
     } finally {
       setAdding(false);
     }

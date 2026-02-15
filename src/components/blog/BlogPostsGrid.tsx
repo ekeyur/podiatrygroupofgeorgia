@@ -19,6 +19,13 @@ interface BlogPostsGridProps {
   pageInfo: PageInfo;
 }
 
+function proxyImageUrl(url: string): string {
+  return url.replace(
+    /^https?:\/\/(?:www\.)?podiatrygroupofgeorgia\.com\/wp-content\/uploads\//,
+    "/wp-content/uploads/"
+  );
+}
+
 function transformRawPost(raw: WPRawPost): Post {
   const author = raw._embedded?.author?.[0];
   const categories = raw._embedded?.["wp:term"]?.[0] ?? [];
@@ -32,7 +39,7 @@ function transformRawPost(raw: WPRawPost): Post {
     date: raw.date,
     modified: raw.modified,
     featuredImage: media
-      ? { node: { sourceUrl: media.source_url, altText: media.alt_text ?? "" } }
+      ? { node: { sourceUrl: proxyImageUrl(media.source_url), altText: media.alt_text ?? "" } }
       : undefined,
     categories: {
       nodes: categories.map((c: any) => ({ name: c.name, slug: c.slug })),

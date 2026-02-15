@@ -8,9 +8,9 @@ export default function CheckoutPage() {
 
   return (
     <>
-      <section className="bg-brand-950 py-16">
+      <section className="bg-cream-50 py-16">
         <div className="max-w-7xl mx-auto px-6">
-          <h1 className="font-display text-4xl font-bold text-white">
+          <h1 className="font-display text-4xl font-bold text-brand-950">
             Checkout
           </h1>
         </div>

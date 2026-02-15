@@ -1,6 +1,5 @@
-import { Button } from "@/components/ui/Button";
 import { Phone, Mail, MapPin, Clock } from "lucide-react";
-import { AppointmentForm } from "@/components/contact/AppointmentForm";
+import { BookingDropdown } from "@/components/ui/BookingDropdown";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -9,26 +8,18 @@ export const metadata: Metadata = {
     "Contact Podiatry Group of Georgia in Marietta. Book your appointment online or call (404) 806-3731.",
 };
 
-export default async function ContactPage({
-  searchParams,
-}: {
-  searchParams: Promise<{ type?: string }>;
-}) {
-  const { type } = await searchParams;
-  const appointmentType =
-    type === "spa" ? "spa" : type === "medical" ? "medical" : "";
-
+export default function ContactPage() {
   return (
     <>
-      <section className="bg-brand-950 py-14 sm:py-24">
+      <section className="bg-cream-50 py-14 sm:py-24">
         <div className="max-w-7xl mx-auto px-5 sm:px-6">
-          <span className="inline-block font-body text-sm font-semibold uppercase tracking-[0.2em] text-gold-400 mb-3">
+          <span className="inline-block font-body text-sm font-semibold uppercase tracking-[0.2em] text-brand-500 mb-3">
             Contact
           </span>
-          <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white max-w-3xl">
+          <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-brand-950 max-w-3xl">
             Get in Touch
           </h1>
-          <p className="mt-4 text-lg text-white/80 font-body max-w-xl">
+          <p className="mt-4 text-lg text-brand-700 font-body max-w-xl">
             Ready to start your journey to pain-free feet? Book an appointment
             or reach out with any questions.
           </p>
@@ -121,13 +112,31 @@ export default async function ContactPage({
               </div>
             </div>
 
-            {/* Contact form */}
+            {/* Booking CTA */}
             <div>
               <h2 className="font-display text-2xl font-bold text-brand-900 mb-6">
                 Book an Appointment
               </h2>
 
-              <AppointmentForm defaultType={appointmentType} />
+              <div className="bg-white rounded-2xl border border-brand-100/50 p-8 text-center">
+                <p className="text-brand-700 font-body leading-relaxed mb-8">
+                  Choose between a medical podiatry visit or a relaxing spa
+                  treatment. You&apos;ll be directed to our secure online booking
+                  system.
+                </p>
+
+                <BookingDropdown variant="primary" size="lg" />
+
+                <p className="mt-8 text-sm text-brand-600 font-body">
+                  Prefer to call?{" "}
+                  <a
+                    href="tel:4048063731"
+                    className="text-brand-500 font-semibold hover:text-brand-600 transition-colors"
+                  >
+                    (404) 806-3731
+                  </a>
+                </p>
+              </div>
             </div>
           </div>
         </div>

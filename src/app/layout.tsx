@@ -3,6 +3,8 @@ import "./globals.css";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { CartProvider } from "@/context/CartContext";
+import { ToastProvider } from "@/context/ToastContext";
+import { ToastContainer } from "@/components/ui/ToastContainer";
 
 export const metadata: Metadata = {
   title: {
@@ -29,21 +31,24 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="min-h-screen flex flex-col">
-        <CartProvider>
-          <Navbar />
-          <main className="flex-1">{children}</main>
-          <Footer />
+        <ToastProvider>
+          <CartProvider>
+            <ToastContainer />
+            <Navbar />
+            <main className="flex-1">{children}</main>
+            <Footer />
 
-          {/* Mobile floating CTA */}
-          <div className="floating-cta">
-            <a
-              href="tel:4048063731"
-              className="flex items-center justify-center gap-2 w-full py-3.5 bg-brand-500 text-white font-semibold rounded-full shadow-2xl shadow-brand-500/40 active:scale-95 transition-transform"
-            >
-              📞 Call (404) 806-3731
-            </a>
-          </div>
-        </CartProvider>
+            {/* Mobile floating CTA */}
+            <div className="floating-cta">
+              <a
+                href="tel:4048063731"
+                className="flex items-center justify-center gap-2 w-full py-3.5 bg-brand-500 text-white font-semibold rounded-full shadow-2xl shadow-brand-500/40 active:scale-95 transition-transform"
+              >
+                📞 Call (404) 806-3731
+              </a>
+            </div>
+          </CartProvider>
+        </ToastProvider>
       </body>
     </html>
   );

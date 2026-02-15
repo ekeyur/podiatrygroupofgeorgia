@@ -1,5 +1,6 @@
 import { getPage } from "@/lib/api";
 import { Button } from "@/components/ui/Button";
+import { BookingDropdown } from "@/components/ui/BookingDropdown";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -13,28 +14,21 @@ export default async function SpaPage() {
 
   return (
     <>
-      <section className="bg-brand-950 py-14 sm:py-24">
+      <section className="bg-cream-50 py-14 sm:py-24">
         <div className="max-w-7xl mx-auto px-5 sm:px-6">
-          <span className="inline-block font-body text-sm font-semibold uppercase tracking-[0.2em] text-gold-400 mb-3">
+          <span className="inline-block font-body text-sm font-semibold uppercase tracking-[0.2em] text-brand-500 mb-3">
             Medical Spa
           </span>
-          <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white max-w-3xl">
+          <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-brand-950 max-w-3xl">
             Foot & Hand Spa
           </h1>
-          <p className="mt-4 text-lg text-white/80 font-body max-w-xl">
+          <p className="mt-4 text-lg text-brand-700 font-body max-w-xl">
             The only medical spa in North Georgia solely dedicated to the
             treatment of hands and feet. Relax in a medically supervised,
             hospital-grade clean environment.
           </p>
           <div className="mt-8">
-            <a
-              href="https://book.squareup.com/appointments/tonko1xg4rnxyu/location/L0DYS13WGWESZ/services"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center font-body font-semibold tracking-wide rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-brand-400 focus:ring-offset-2 bg-gold-400 text-brand-900 hover:bg-gold-300 shadow-lg shadow-gold-400/25 hover:shadow-gold-400/40 hover:-translate-y-0.5 px-10 py-4 text-lg"
-            >
-              Book a Spa Treatment
-            </a>
+            <BookingDropdown variant="primary" size="lg" label="Book a Spa Treatment" />
           </div>
         </div>
       </section>
@@ -76,15 +70,8 @@ export default async function SpaPage() {
             Combine our spa services with personalized medical care for the best
             results.
           </p>
-          <div className="mt-6 flex flex-col sm:flex-row gap-4 justify-center">
-            <a
-              href="https://book.squareup.com/appointments/tonko1xg4rnxyu/location/L0DYS13WGWESZ/services"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center font-body font-semibold tracking-wide rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-brand-400 focus:ring-offset-2 bg-brand-500 text-white hover:bg-brand-600 shadow-lg shadow-brand-500/25 hover:shadow-brand-500/40 hover:-translate-y-0.5 px-7 py-3 text-base"
-            >
-              Book Appointment
-            </a>
+          <div className="mt-6 flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <BookingDropdown variant="primary" />
             <Button href="/shop" variant="outline">
               Browse Spa Products
             </Button>

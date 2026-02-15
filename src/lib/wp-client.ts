@@ -1,5 +1,4 @@
 const WP_API_URL = process.env.WORDPRESS_API_URL!;
-const PUBLIC_WP_API_URL = process.env.NEXT_PUBLIC_WP_API_URL!;
 
 interface FetchWPOptions {
   revalidate?: number | false;
@@ -64,48 +63,4 @@ export async function fetchWP<T = any>(
     totalItems: totalItems ? parseInt(totalItems, 10) : undefined,
     totalPages: totalPages ? parseInt(totalPages, 10) : undefined,
   };
-}
-
-/**
- * Client-side fetcher for WC Store API cart operations.
- * Uses Cart-Token header for cross-origin session persistence.
- */
-export async function clientFetchWP<T = any>(
-  endpoint: string,
-  options?: {
-    method?: string;
-    body?: any;
-    cartToken?: string;
-  }
-): Promise<{ data: T; cartToken: string | null }> {
-  const url = `${PUBLIC_WP_API_URL}${endpoint}`;
-
-  const headers: Record<string, string> = {
-    Accept: "application/json",
-  };
-
-  if (options?.body) {
-    headers["Content-Type"] = "application/json";
-  }
-
-  if (options?.cartToken) {
-    headers["Cart-Token"] = options.cartToken;
-  }
-
-  const res = await fetch(url, {
-    method: options?.method ?? "GET",
-    headers,
-    body: options?.body ? JSON.stringify(options.body) : undefined,
-    credentials: "include",
-  });
-
-  if (!res.ok) {
-    const errorBody = await res.text();
-    throw new Error(`WC Store API error: ${res.status} — ${errorBody}`);
-  }
-
-  const data = await res.json();
-  const cartToken = res.headers.get("Cart-Token");
-
-  return { data: data as T, cartToken };
 }

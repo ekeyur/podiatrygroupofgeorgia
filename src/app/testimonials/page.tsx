@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { getAllTestimonials } from "@/lib/api";
 import { stripHtml } from "@/lib/utils";
 import { Star } from "lucide-react";
@@ -14,15 +15,15 @@ export default async function TestimonialsPage() {
 
   return (
     <>
-      <section className="bg-brand-950 py-24">
+      <section className="bg-cream-50 py-24">
         <div className="max-w-7xl mx-auto px-6">
-          <span className="inline-block font-body text-sm font-semibold uppercase tracking-[0.2em] text-gold-400 mb-3">
+          <span className="inline-block font-body text-sm font-semibold uppercase tracking-[0.2em] text-brand-500 mb-3">
             Testimonials
           </span>
-          <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-white max-w-3xl">
+          <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-brand-950 max-w-3xl">
             Patient Stories
           </h1>
-          <p className="mt-4 text-lg text-white/80 font-body max-w-xl">
+          <p className="mt-4 text-lg text-brand-700 font-body max-w-xl">
             Hear from real patients about their experience at our practice.
           </p>
         </div>
@@ -56,15 +57,28 @@ export default async function TestimonialsPage() {
                     &ldquo;{stripHtml(t.content)}&rdquo;
                   </blockquote>
 
-                  <div className="mt-4 pt-4 border-t border-brand-100/50">
-                    <p className="font-semibold text-brand-900 text-sm">
-                      {t.acf?.patientName || "Patient"}
-                    </p>
-                    {t.acf?.source && (
-                      <p className="text-xs text-brand-500 mt-0.5">
-                        via {t.acf.source}
-                      </p>
+                  <div className="mt-4 pt-4 border-t border-brand-100/50 flex items-center gap-3">
+                    {t.acf?.photoUrl && (
+                      <Image
+                        src={t.acf.photoUrl}
+                        alt={t.acf.patientName || "Reviewer"}
+                        width={32}
+                        height={32}
+                        className="rounded-full"
+                      />
                     )}
+                    <div>
+                      <p className="font-semibold text-brand-900 text-sm">
+                        {t.acf?.patientName || "Patient"}
+                      </p>
+                      <p className="text-xs text-brand-500 mt-0.5">
+                        {t.acf?.relativeTime
+                          ? `${t.acf.relativeTime} on Google`
+                          : t.acf?.source
+                            ? `via ${t.acf.source}`
+                            : ""}
+                      </p>
+                    </div>
                   </div>
                 </div>
               ))}

@@ -86,6 +86,9 @@ export interface Testimonial {
     rating: number;
     source: string;
     dateReceived?: string;
+    relativeTime?: string;
+    photoUrl?: string;
+    googleMapsUri?: string;
   };
 }
 

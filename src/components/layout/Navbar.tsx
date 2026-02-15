@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
@@ -14,6 +14,7 @@ import {
   Stethoscope,
   Sparkles,
 } from "lucide-react";
+import { BookingDropdown } from "@/components/ui/BookingDropdown";
 
 const navLinks = [
   { label: "Home", href: "/" },
@@ -21,7 +22,8 @@ const navLinks = [
     label: "Services",
     href: "/services",
     children: [
-      { label: "Laser Therapy", href: "/services/laser-therapy" },
+      { label: "Laser Pain Relief", href: "/services/laser-pain-relief" },
+      { label: "Clearly Beautiful Nails", href: "/services/clearly-beautiful-nails" },
       { label: "Diabetic Foot Care", href: "/services/diabetic-foot-care" },
       { label: "Foot Surgery", href: "/services/foot-surgery" },
       { label: "Orthotics", href: "/services/orthotics" },
@@ -39,8 +41,6 @@ export function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [dropdown, setDropdown] = useState<string | null>(null);
-  const [bookingOpen, setBookingOpen] = useState(false);
-  const bookingRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
   const { itemCount } = useCart();
 
@@ -53,18 +53,7 @@ export function Navbar() {
   useEffect(() => {
     setMobileOpen(false);
     setDropdown(null);
-    setBookingOpen(false);
   }, [pathname]);
-
-  useEffect(() => {
-    function handleClickOutside(e: MouseEvent) {
-      if (bookingRef.current && !bookingRef.current.contains(e.target as Node)) {
-        setBookingOpen(false);
-      }
-    }
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
 
   return (
     <>
@@ -74,7 +63,7 @@ export function Navbar() {
           <p>2864 Johnson Ferry Rd, Suite 100, Marietta, GA 30062</p>
           <a
             href="tel:4048063731"
-            className="flex items-center gap-2 text-gold-400 hover:text-gold-300 transition-colors"
+            className="flex items-center gap-2 text-white/80 hover:text-white transition-colors"
           >
             <Phone size={14} />
             (404) 806-3731
@@ -173,61 +162,15 @@ export function Navbar() {
               >
                 <ShoppingBag size={20} />
                 {itemCount > 0 && (
-                  <span className="absolute -top-0.5 -right-0.5 bg-gold-400 text-brand-950 text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center">
+                  <span className="absolute -top-0.5 -right-0.5 bg-brand-500 text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center">
                     {itemCount}
                   </span>
                 )}
               </Link>
 
               {/* CTA */}
-              <div className="hidden md:block relative" ref={bookingRef}>
-                <button
-                  onClick={() => setBookingOpen(!bookingOpen)}
-                  className="inline-flex items-center gap-1.5 px-6 py-2.5 bg-brand-500 text-white text-sm font-semibold rounded-full hover:bg-brand-600 shadow-lg shadow-brand-500/25 hover:shadow-brand-500/40 transition-all hover:-translate-y-0.5"
-                >
-                  Book Appointment
-                  <ChevronDown
-                    size={14}
-                    className={cn(
-                      "transition-transform",
-                      bookingOpen && "rotate-180"
-                    )}
-                  />
-                </button>
-                {bookingOpen && (
-                  <div className="absolute top-full right-0 pt-2 w-64 z-50">
-                    <div className="bg-white rounded-xl shadow-xl shadow-brand-900/10 border border-brand-100 p-2">
-                      <a
-                        href="https://www.zocdoc.com/practice/podiatry-group-of-georgia-63623?lock=true&isNewPatient=false&referrerType=widget"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-3 px-4 py-3 text-sm text-brand-700 hover:text-brand-500 hover:bg-brand-50 rounded-lg transition-colors"
-                      >
-                        <Stethoscope size={18} className="text-brand-500 shrink-0" />
-                        <div>
-                          <p className="font-semibold">Medical Appointment</p>
-                          <p className="text-xs text-brand-600 mt-0.5">
-                            Podiatry consultation & treatment
-                          </p>
-                        </div>
-                      </a>
-                      <a
-                        href="https://book.squareup.com/appointments/tonko1xg4rnxyu/location/L0DYS13WGWESZ/services"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-3 px-4 py-3 text-sm text-brand-700 hover:text-brand-500 hover:bg-brand-50 rounded-lg transition-colors"
-                      >
-                        <Sparkles size={18} className="text-gold-400 shrink-0" />
-                        <div>
-                          <p className="font-semibold">Medical Spa Appointment</p>
-                          <p className="text-xs text-brand-600 mt-0.5">
-                            Foot & hand spa treatments
-                          </p>
-                        </div>
-                      </a>
-                    </div>
-                  </div>
-                )}
+              <div className="hidden md:block">
+                <BookingDropdown variant="primary" size="sm" align="right" />
               </div>
 
               {/* Mobile toggle */}
@@ -285,14 +228,14 @@ export function Navbar() {
                   href="https://book.squareup.com/appointments/tonko1xg4rnxyu/location/L0DYS13WGWESZ/services"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2 px-6 py-3 bg-gold-400 text-brand-950 font-semibold rounded-full"
+                  className="flex items-center justify-center gap-2 px-6 py-3 bg-brand-600 text-white font-semibold rounded-full"
                 >
                   <Sparkles size={18} />
                   Medical Spa Appointment
                 </a>
                 <a
                   href="tel:4048063731"
-                  className="block text-center mt-3 text-gold-500 font-semibold"
+                  className="block text-center mt-3 text-brand-500 font-semibold"
                 >
                   Call (404) 806-3731
                 </a>

@@ -53,7 +53,7 @@ export function WhyChooseUs() {
               transition={{ duration: 0.5, delay: i * 0.1 }}
             >
               <div className="w-11 h-11 sm:w-14 sm:h-14 mx-auto bg-white/15 rounded-xl flex items-center justify-center mb-3 sm:mb-4 backdrop-blur-sm">
-                <stat.icon size={22} className="text-gold-400" />
+                <stat.icon size={22} className="text-white" />
               </div>
               <p className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-white">
                 {stat.value}

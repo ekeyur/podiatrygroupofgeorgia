@@ -6,20 +6,37 @@ import type { Service, TeamMember, Testimonial, Page } from "@/types/wordpress";
 
 export const FALLBACK_SERVICES: Service[] = [
   {
-    title: "Laser Therapy",
-    slug: "laser-therapy",
+    title: "Laser Pain Relief & Healing",
+    slug: "laser-pain-relief",
     content:
-      "<p>Our advanced laser therapy treatments provide non-invasive pain relief and accelerated healing for a wide range of foot and ankle conditions.</p>",
+      "<p>Our Nexus 10W Class 4 laser therapy uses specific light wavelengths to reduce inflammation and accelerate cell repair. Over 90% of patients experience positive results across 3–9 sessions lasting 10–15 minutes each.</p>",
     acf: {
       shortDescription:
-        "Advanced laser treatments for pain relief, faster healing, and fungal nail elimination.",
+        "Class 4 laser therapy to reduce inflammation, accelerate tissue repair, and relieve chronic foot and ankle pain.",
       icon: { sourceUrl: "", altText: "" },
       heroImage: { sourceUrl: "", altText: "" },
     },
     seo: {
-      title: "Laser Therapy | Podiatry Group of Georgia",
+      title: "Laser Pain Relief & Healing | Podiatry Group of Georgia",
       metaDesc:
-        "Advanced laser therapy for foot and ankle pain, fungal nails, and accelerated healing in Marietta, GA.",
+        "Class 4 laser therapy for foot and ankle pain relief and accelerated healing in Marietta, GA.",
+    },
+  },
+  {
+    title: "Clearly Beautiful Nails",
+    slug: "clearly-beautiful-nails",
+    content:
+      "<p>Our Q-Clear Q-Switch laser treatment eliminates toenail fungus infections painlessly in under 10 minutes. New clean nail growth typically appears within 2–4 months.</p>",
+    acf: {
+      shortDescription:
+        "Painless Q-Clear laser treatment to eliminate toenail fungus — results in as little as one session.",
+      icon: { sourceUrl: "", altText: "" },
+      heroImage: { sourceUrl: "", altText: "" },
+    },
+    seo: {
+      title: "Clearly Beautiful Nails | Podiatry Group of Georgia",
+      metaDesc:
+        "Painless Q-Clear laser treatment for toenail fungus in Marietta, GA. Results in as little as one session.",
     },
   },
   {

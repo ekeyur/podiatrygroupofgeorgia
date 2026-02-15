@@ -33,11 +33,11 @@ export default async function BlogPostPage({ params }: Props) {
   return (
     <>
       {/* Hero */}
-      <section className="bg-brand-950 py-24">
+      <section className="bg-cream-50 py-24">
         <div className="max-w-3xl mx-auto px-6">
           <Link
             href="/blog"
-            className="inline-flex items-center gap-2 text-sm text-brand-300 hover:text-gold-400 font-medium transition-colors mb-8"
+            className="inline-flex items-center gap-2 text-sm text-brand-500 hover:text-brand-600 font-medium transition-colors mb-8"
           >
             <ChevronLeft size={16} />
             Back to Blog
@@ -45,14 +45,14 @@ export default async function BlogPostPage({ params }: Props) {
 
           <div className="flex items-center gap-3 text-sm mb-4">
             {post.categories?.nodes[0] && (
-              <span className="px-3 py-1 bg-gold-400/15 text-gold-400 rounded-full font-semibold text-xs uppercase tracking-wider">
+              <span className="px-3 py-1 bg-brand-500/10 text-brand-500 rounded-full font-semibold text-xs uppercase tracking-wider">
                 {post.categories.nodes[0].name}
               </span>
             )}
-            <span className="text-white/70">{formatDate(post.date)}</span>
+            <span className="text-brand-600">{formatDate(post.date)}</span>
           </div>
 
-          <h1 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight">
+          <h1 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-brand-950 leading-tight">
             {post.title}
           </h1>
 
@@ -67,7 +67,7 @@ export default async function BlogPostPage({ params }: Props) {
                   className="rounded-full"
                 />
               )}
-              <span className="text-white/80 text-sm font-body">
+              <span className="text-brand-700 text-sm font-body">
                 By {post.author.node.name}
               </span>
             </div>

@@ -24,7 +24,7 @@ export function Button({
     primary:
       "bg-brand-500 text-white hover:bg-brand-600 shadow-lg shadow-brand-500/25 hover:shadow-brand-500/40 hover:-translate-y-0.5",
     secondary:
-      "bg-gold-400 text-brand-950 hover:bg-gold-300 shadow-lg shadow-gold-400/25 hover:shadow-gold-400/40 hover:-translate-y-0.5",
+      "bg-brand-600 text-white hover:bg-brand-700 shadow-lg shadow-brand-600/25 hover:shadow-brand-600/40 hover:-translate-y-0.5",
     outline:
       "border-2 border-brand-500 text-brand-500 hover:bg-brand-500 hover:text-white",
     ghost: "text-brand-600 hover:bg-brand-50",

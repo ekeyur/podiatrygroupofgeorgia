@@ -15,15 +15,15 @@ export default async function AboutPage() {
   return (
     <>
       {/* Hero */}
-      <section className="bg-brand-950 py-24">
+      <section className="bg-cream-50 py-24">
         <div className="max-w-7xl mx-auto px-6">
-          <span className="inline-block font-body text-sm font-semibold uppercase tracking-[0.2em] text-gold-400 mb-3">
+          <span className="inline-block font-body text-sm font-semibold uppercase tracking-[0.2em] text-brand-500 mb-3">
             About Us
           </span>
-          <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-white max-w-3xl">
+          <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-brand-950 max-w-3xl">
             {page?.title || "Why Choose Us"}
           </h1>
-          <p className="mt-4 text-lg text-white/80 font-body max-w-xl">
+          <p className="mt-4 text-lg text-brand-700 font-body max-w-xl">
             The leading Georgia foot and ankle practice for a reason.
           </p>
         </div>
